@@ -1255,6 +1255,22 @@
                         <span>KNOCKOUT</span>
                     </div>
                 </div>
+                                <!-- bidx battle ground Card -->
+                <div class="card" onclick="openEventModal('bidx')">
+                    <div>
+                        <div class="card-tag">DIRECTIVE #09 • STRATEGY & AUCTION</div>
+                        <h3 class="card-title">bidx battle ground</h3>
+                        <p class="card-desc">A fast-paced competitive auction game where teams strategically bid virtual money to outsmart opponents, manage budgets, and build the highest-value collection.</p>
+                        <button class="btn-details">
+                            <span>VIEW PROTOCOL SPECS</span>
+                            <span>&rarr;</span>
+                        </button>
+                    </div>
+                    <div class="card-meta">
+                        <span>FORMAT: TEAMS</span>
+                        <span>AUCTION WARS</span>
+                    </div>
+                </div>
             </div>
         </section>
 
@@ -1454,29 +1470,19 @@
                         <label class="checkbox-label"><input type="checkbox" name="events" value="Box Cricket"> Boundary Wars (Cricket)</label>
                         <label class="checkbox-label"><input type="checkbox" name="events" value="Kickoff Free Fire"> Kickoff Free Fire</label>
                         <label class="checkbox-label"><input type="checkbox" name="events" value="Kickoff eFootball"> Kickoff eFootball</label>
+                        <label class="checkbox-label"><input type="checkbox" name="events" value="bidx battle ground"> bidx battle ground</label>
                     </div>
                 </div>
 
                 <div class="payment-qr-card">
-                    <div style="font-family: 'Share Tech Mono', monospace; font-size: 0.75rem; color: var(--gold-accent);">SCAN QR TO PAY ENTRY FEE</div>
-                    <!-- PhonePe UPI QR Graphic Placeholder -->
-                    <svg style="width: 140px; height: 140px; margin: 0.5rem 0;" viewBox="0 0 100 100">
-                        <rect width="100" height="100" fill="#ffffff" rx="8"/>
-                        <rect x="10" y="10" width="25" height="25" fill="#5f259f"/>
-                        <rect x="15" y="15" width="15" height="15" fill="#ffffff"/>
-                        <rect x="18" y="18" width="9" height="9" fill="#5f259f"/>
-                        <rect x="65" y="10" width="25" height="25" fill="#5f259f"/>
-                        <rect x="70" y="15" width="15" height="15" fill="#ffffff"/>
-                        <rect x="73" y="18" width="9" height="9" fill="#5f259f"/>
-                        <rect x="10" y="65" width="25" height="25" fill="#5f259f"/>
-                        <rect x="15" y="70" width="15" height="15" fill="#ffffff"/>
-                        <rect x="18" y="73" width="9" height="9" fill="#5f259f"/>
-                        <rect x="40" y="40" width="20" height="20" fill="#5f259f" rx="3"/>
-                        <circle cx="50" cy="50" r="5" fill="#ffffff"/>
-                    </svg>
-                    <div style="font-size: 0.8rem; font-family: 'Share Tech Mono', monospace; color: var(--doom-bright);">ACCEPTED VIA PHONEPE / UPI</div>
-                    <div style="font-size: 0.75rem; color: var(--text-muted);">UPI ID: ******5023</div>
-                </div>
+    <div style="font-family: 'Share Tech Mono', monospace; font-size: 0.75rem; color: var(--gold-accent);">SCAN QR TO PAY ENTRY FEE</div>
+    
+    <!-- YOUR PHONEPE QR IMAGE -->
+    <img src="payment-qr.jpg" alt="PhonePe QR Code - Mr Nabeel Mohamed" style="width: 180px; height: auto; border-radius: 6px; border: 1px solid var(--doom-bright); margin: 0.5rem 0; box-shadow: 0 0 15px var(--doom-glow);">
+    
+    <div style="font-size: 0.85rem; font-family: 'Orbitron', sans-serif; color: var(--text-main); margin-top: 0.3rem;">Mr Nabeel Mohamed</div>
+    <div style="font-size: 0.8rem; font-family: 'Share Tech Mono', monospace; color: var(--doom-bright);">ACCEPTED VIA PHONEPE / UPI</div>
+</div>
 
                 <div class="form-group">
                     <label>UPLOAD PAYMENT SCREENSHOT <span>*</span></label>
@@ -1600,6 +1606,17 @@
                     "Groups of 4 or 8 participants per bracket.",
                     "Win-or-go-home single elimination.",
                     "Grand winner claims the championship cash prize!"
+                ]
+            }
+            bidx: {
+               tag: "DIRECTIVE #09 • STRATEGY & AUCTION",
+               title: "bidx battle ground",
+               desc: "Bidding Wars is a fast-paced competitive auction game where teams compete against each other by strategically bidding their virtual money to win different items, players, challenges, or resources. The goal isn't simply to spend the most—it’s to outsmart opponents, manage your budget, and build the highest-value collection.",
+               rules: [
+                    "Format: Team-based bidding competition.",
+                    "Manage your virtual budget strategically across multiple auction rounds.",
+                    "Bid on items, players, challenges, or resources.",
+                    "Focus on budget optimization and building the highest-value collection to win."
                 ]
             }
         };
