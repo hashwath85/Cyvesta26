@@ -1255,7 +1255,8 @@
                         <span>KNOCKOUT</span>
                     </div>
                 </div>
-                                <!-- bidx battle ground Card -->
+
+                <!-- bidx battle ground Card -->
                 <div class="card" onclick="openEventModal('bidx')">
                     <div>
                         <div class="card-tag">DIRECTIVE #09 • STRATEGY & AUCTION</div>
@@ -1475,14 +1476,14 @@
                 </div>
 
                 <div class="payment-qr-card">
-    <div style="font-family: 'Share Tech Mono', monospace; font-size: 0.75rem; color: var(--gold-accent);">SCAN QR TO PAY ENTRY FEE</div>
-    
-    <!-- YOUR PHONEPE QR IMAGE -->
-    <img src="payment-qr.png" alt="PhonePe QR Code - Mr Nabeel Mohamed" style="width: 180px; height: auto; border-radius: 6px; border: 1px solid var(--doom-bright); margin: 0.5rem 0; box-shadow: 0 0 15px var(--doom-glow);">
-    
-    <div style="font-size: 0.85rem; font-family: 'Orbitron', sans-serif; color: var(--text-main); margin-top: 0.3rem;">Mr Nabeel Mohamed</div>
-    <div style="font-size: 0.8rem; font-family: 'Share Tech Mono', monospace; color: var(--doom-bright);">ACCEPTED VIA PHONEPE / UPI</div>
-</div>
+                    <div style="font-family: 'Share Tech Mono', monospace; font-size: 0.75rem; color: var(--gold-accent);">SCAN QR TO PAY ENTRY FEE</div>
+                    
+                    <!-- YOUR PHONEPE QR IMAGE -->
+                    <img src="payment-qr.png" alt="PhonePe QR Code - Mr Nabeel Mohamed" style="width: 180px; height: auto; border-radius: 6px; border: 1px solid var(--doom-bright); margin: 0.5rem 0; box-shadow: 0 0 15px var(--doom-glow);">
+                    
+                    <div style="font-size: 0.85rem; font-family: 'Orbitron', sans-serif; color: var(--text-main); margin-top: 0.3rem;">Mr Nabeel Mohamed</div>
+                    <div style="font-size: 0.8rem; font-family: 'Share Tech Mono', monospace; color: var(--doom-bright);">ACCEPTED VIA PHONEPE / UPI</div>
+                </div>
 
                 <div class="form-group">
                     <label>UPLOAD PAYMENT SCREENSHOT <span>*</span></label>
@@ -1499,10 +1500,25 @@
     </footer>
 
     <script>
-        /* 0. SUPABASE CLIENT INITIALIZATION */
-        const SUPABASE_URL = "https://cixtnsopizlavuwlikhg.supabase.co";
-        const SUPABASE_ANON_KEY = "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpc3MiOiJzdXBhYmFzZSIsInJlZiI6ImNpeHRuc29waXpsYXZ1d2xpa2hnIiwicm9sZSI6ImFub24iLCJpYXQiOjE3ODc2NDg5NDUsImV4cCI6MjEwMzIyNDk0NX0.dZbo3Y1h1MA27fTWg0K018xXaPW2qGa9HhDAnRdkluU";
-        const supabaseClient = supabase.createClient(SUPABASE_URL, SUPABASE_ANON_KEY);
+        /* 0. DYNAMIC SUPABASE INITIALIZATION VIA ENVIRONMENT VARIABLES ENDPOINT */
+        let supabaseClient = null;
+
+        async function initSupabase() {
+            try {
+                const response = await fetch('/api/config');
+                const config = await response.json();
+
+                if (!config.SUPABASE_URL || !config.SUPABASE_ANON_KEY) {
+                    throw new Error('Database credentials missing from configuration endpoint.');
+                }
+
+                supabaseClient = supabase.createClient(config.SUPABASE_URL, config.SUPABASE_ANON_KEY);
+            } catch (err) {
+                console.error('Failed to initialize database client:', err);
+            }
+        }
+
+        initSupabase();
 
         /* GLOBAL EVENT DATA FOR POPUP CARDS */
         const eventData = {
@@ -1607,12 +1623,12 @@
                     "Win-or-go-home single elimination.",
                     "Grand winner claims the championship cash prize!"
                 ]
-            }
+            },
             bidx: {
-               tag: "DIRECTIVE #09 • STRATEGY & AUCTION",
-               title: "bidx battle ground",
-               desc: "Bidding Wars is a fast-paced competitive auction game where teams compete against each other by strategically bidding their virtual money to win different items, players, challenges, or resources. The goal isn't simply to spend the most—it’s to outsmart opponents, manage your budget, and build the highest-value collection.",
-               rules: [
+                tag: "DIRECTIVE #09 • STRATEGY & AUCTION",
+                title: "bidx battle ground",
+                desc: "Bidding Wars is a fast-paced competitive auction game where teams compete against each other by strategically bidding their virtual money to win different items, players, challenges, or resources. The goal isn't simply to spend the most—it’s to outsmart opponents, manage your budget, and build the highest-value collection.",
+                rules: [
                     "Format: Team-based bidding competition.",
                     "Manage your virtual budget strategically across multiple auction rounds.",
                     "Bid on items, players, challenges, or resources.",
@@ -1834,6 +1850,11 @@
 
         async function handleFormSubmit(e) {
             e.preventDefault();
+
+            if (!supabaseClient) {
+                alert('Database initialization in progress. Please try again in a moment.');
+                return;
+            }
 
             const submitBtn = document.getElementById('submitBtn');
             const selectedEvents = Array.from(document.querySelectorAll('input[name="events"]:checked')).map(cb => cb.value);
