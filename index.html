@@ -1630,10 +1630,35 @@
                     </select>
                 </div>
 
-                <!-- STANDARD EVENT SELECTION (SIDE-BY-SIDE GRID) -->
+                <!-- CRICKET SQUAD INPUTS -->
+                <div id="cricketSquadContainer" class="squad-inputs-box" style="display: none;">
+                    <div class="squad-title">BOUNDARY WARS BOX CRICKET SQUAD ROSTER (₹200 TOTAL ENTRY)</div>
+                    <p style="font-size: 0.72rem; color: var(--text-muted); margin-bottom: 0.8rem;">Captain details are captured above. Enter team name & remaining 3 squad members:</p>
+                    
+                    <div class="squad-grid">
+                        <div class="form-group" style="margin-bottom: 0.5rem;">
+                            <label>TEAM / SQUAD NAME <span>*</span></label>
+                            <input type="text" id="cricSquadName" class="form-input" placeholder="e.g. Avadi Strikers">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0.5rem;">
+                            <label>PLAYER 2 NAME <span>*</span></label>
+                            <input type="text" id="cricP2" class="form-input" placeholder="Player 2 Name">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0.5rem;">
+                            <label>PLAYER 3 NAME <span>*</span></label>
+                            <input type="text" id="cricP3" class="form-input" placeholder="Player 3 Name">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0.5rem;">
+                            <label>PLAYER 4 NAME <span>*</span></label>
+                            <input type="text" id="cricP4" class="form-input" placeholder="Player 4 Name">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STANDARD & EXTRA EVENT SELECTION GRID -->
                 <div id="standardEventsContainer" class="form-group">
-                    <label>SELECT YOUR EVENTS <span>*</span></label>
-                    <p style="font-size: 0.72rem; color: var(--text-muted); margin-bottom: 0.5rem;">Note: Overlapping events in the exact same time slot will automatically lock out.</p>
+                    <label id="eventSelectionHeaderLabel">SELECT YOUR EVENTS <span>*</span></label>
+                    <p id="eventSelectionSubText" style="font-size: 0.72rem; color: var(--text-muted); margin-bottom: 0.5rem;">Note: Overlapping events in the exact same time slot will automatically lock out.</p>
                     
                     <div class="events-side-by-side">
                         <!-- Technical Column -->
@@ -1717,31 +1742,6 @@
                         <div class="form-group" style="margin-bottom: 0.5rem;">
                             <label>PLAYER 4 IN-GAME NAME <span>*</span></label>
                             <input type="text" id="ffP4" class="form-input" placeholder="Player 4 IGN">
-                        </div>
-                    </div>
-                </div>
-
-                <!-- CRICKET SQUAD INPUTS (HIDDEN BY DEFAULT) -->
-                <div id="cricketSquadContainer" class="squad-inputs-box" style="display: none;">
-                    <div class="squad-title">BOUNDARY WARS BOX CRICKET SQUAD ROSTER (₹200 TOTAL ENTRY)</div>
-                    <p style="font-size: 0.72rem; color: var(--text-muted); margin-bottom: 0.8rem;">Captain details are captured above. Enter team name & remaining 3 squad members:</p>
-                    
-                    <div class="squad-grid">
-                        <div class="form-group" style="margin-bottom: 0.5rem;">
-                            <label>TEAM / SQUAD NAME <span>*</span></label>
-                            <input type="text" id="cricSquadName" class="form-input" placeholder="e.g. Avadi Strikers">
-                        </div>
-                        <div class="form-group" style="margin-bottom: 0.5rem;">
-                            <label>PLAYER 2 NAME <span>*</span></label>
-                            <input type="text" id="cricP2" class="form-input" placeholder="Player 2 Name">
-                        </div>
-                        <div class="form-group" style="margin-bottom: 0.5rem;">
-                            <label>PLAYER 3 NAME <span>*</span></label>
-                            <input type="text" id="cricP3" class="form-input" placeholder="Player 3 Name">
-                        </div>
-                        <div class="form-group" style="margin-bottom: 0.5rem;">
-                            <label>PLAYER 4 NAME <span>*</span></label>
-                            <input type="text" id="cricP4" class="form-input" placeholder="Player 4 Name">
                         </div>
                     </div>
                 </div>
@@ -1987,6 +1987,8 @@
             const cricketContainer = document.getElementById('cricketSquadContainer');
             const efContainer = document.getElementById('eFootballContainer');
             const feeDisplay = document.getElementById('feeDisplay');
+            const headerLabel = document.getElementById('eventSelectionHeaderLabel');
+            const subText = document.getElementById('eventSelectionSubText');
 
             // Reset mandatory fields
             document.getElementById('ffSquadName').required = false;
@@ -2011,10 +2013,16 @@
             cricketContainer.style.display = 'none';
             efContainer.style.display = 'none';
 
+            // Uncheck all standard checkboxes when switching mode
+            document.querySelectorAll('input[name="events"]').forEach(cb => cb.checked = false);
+
             if (mode === 'standard') {
                 btnStandard.classList.add('active');
                 standardContainer.style.display = 'block';
+                headerLabel.innerHTML = 'SELECT YOUR EVENTS <span>*</span>';
+                subText.textContent = 'Note: Overlapping events in the exact same time slot will automatically lock out.';
                 feeDisplay.textContent = '₹150';
+                validateEventSelections();
             } else if (mode === 'freefire') {
                 btnFF.classList.add('active');
                 ffContainer.style.display = 'block';
@@ -2027,12 +2035,17 @@
             } else if (mode === 'cricket') {
                 btnCricket.classList.add('active');
                 cricketContainer.style.display = 'block';
+                standardContainer.style.display = 'block'; // Display standard event options alongside cricket
+                headerLabel.innerHTML = 'ADDITIONAL EVENTS (OPTIONAL)';
+                subText.textContent = 'Cricket is in Slot 4 (03:00 PM - 04:00 PM). Slot 4 events & Esports are locked out.';
                 feeDisplay.textContent = '₹200';
 
                 document.getElementById('cricSquadName').required = true;
                 document.getElementById('cricP2').required = true;
                 document.getElementById('cricP3').required = true;
                 document.getElementById('cricP4').required = true;
+
+                validateEventSelections();
             } else if (mode === 'efootball') {
                 btnEF.classList.add('active');
                 efContainer.style.display = 'block';
@@ -2048,10 +2061,12 @@
             const checkedBoxes = checkboxes.filter(cb => cb.checked);
 
             const selectedSlots = new Set();
+            checkedBoxes.forEach(cb => selectedSlots.add(cb.dataset.slot));
 
-            checkedBoxes.forEach(cb => {
-                selectedSlots.add(cb.dataset.slot);
-            });
+            // If in Cricket mode, Cricket automatically occupies Slot 4
+            if (currentRegMode === 'cricket') {
+                selectedSlots.add('slot4');
+            }
 
             checkboxes.forEach(cb => {
                 const slot = cb.dataset.slot;
@@ -2242,7 +2257,8 @@
                     pass_id: passId
                 };
             } else if (currentRegMode === 'cricket') {
-                selectedEvents = ['Boundary Wars (Cricket Squad)'];
+                const additionalSelected = Array.from(document.querySelectorAll('input[name="events"]:checked')).map(cb => cb.value);
+                selectedEvents = ['Boundary Wars (Cricket Squad)', ...additionalSelected];
                 registrationFee = 200;
                 passId = 'CRIC-PASS-' + Math.floor(100000 + Math.random() * 900000);
                 extraDetails = {
