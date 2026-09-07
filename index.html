@@ -101,7 +101,6 @@
         @media (min-width: 1025px) {
             * { cursor: none !important; }
             
-            /* RESET CURSOR VISIBILITY INSIDE FORM MODAL AND INPUTS */
             .modal-overlay, 
             .modal, 
             .modal *,
@@ -122,6 +121,7 @@
             button, 
             select, 
             input[type="checkbox"], 
+            input[type="radio"],
             .modal-close,
             .btn-details {
                 cursor: pointer !important;
@@ -262,19 +262,21 @@
             gap: 12px;
         }
 
-        .nav-logo-icon {
-            width: 28px;
-            height: 28px;
-            border: 2px solid var(--doom-bright);
+        /* WHITE CONTAINER FOR LOGO PNG */
+        .nav-logo-container {
+            background: #ffffff;
+            padding: 4px 8px;
             border-radius: 6px;
             display: flex;
             align-items: center;
             justify-content: center;
-            font-family: 'Orbitron', sans-serif;
-            font-weight: 900;
-            color: var(--doom-bright);
-            font-size: 0.8rem;
-            box-shadow: 0 0 10px var(--doom-glow);
+            box-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
+        }
+
+        .nav-logo-img {
+            height: 32px;
+            width: auto;
+            object-fit: contain;
         }
 
         .logo {
@@ -321,7 +323,6 @@
             box-shadow: 0 0 15px var(--doom-glow);
         }
 
-        /* MOBILE HAMBURGER MENU BUTTON & DRAWER */
         .mobile-toggle {
             display: none;
             background: transparent;
@@ -395,6 +396,19 @@
             font-size: 0.7rem;
             color: var(--gold-accent);
             margin-top: 2px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .autonomous-tag {
+            background: rgba(217, 119, 6, 0.2);
+            border: 1px solid var(--gold-accent);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            letter-spacing: 1px;
         }
 
         /* HERO SECTION */
@@ -789,11 +803,11 @@
             background: #08100b;
             border: 1px solid var(--doom-green);
             border-radius: 8px;
-            width: 90%; max-width: 520px;
+            width: 95%; max-width: 680px;
             padding: 2rem;
             box-shadow: 0 0 40px var(--doom-glow);
             position: relative;
-            max-height: 85vh;
+            max-height: 88vh;
             overflow-y: auto;
         }
 
@@ -894,29 +908,133 @@
             color: var(--text-main);
         }
 
-        .checkbox-group {
+        /* REGISTRATION TYPE TOGGLE */
+        .reg-type-selector {
             display: flex;
-            flex-direction: column;
-            gap: 0.5rem;
+            gap: 1rem;
+            margin-bottom: 1.2rem;
+        }
+
+        .reg-type-btn {
+            flex: 1;
+            padding: 0.75rem;
+            background: rgba(16, 185, 129, 0.05);
+            border: 1px solid var(--border-line);
+            border-radius: 6px;
+            color: var(--text-muted);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.8rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .reg-type-btn.active {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: var(--doom-bright);
+            color: var(--doom-bright);
+            box-shadow: 0 0 12px var(--doom-glow);
+        }
+
+        /* SIDE-BY-SIDE EVENTS GRID */
+        .events-side-by-side {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        @media (max-width: 600px) {
+            .events-side-by-side { grid-template-columns: 1fr; }
+        }
+
+        .event-category-box {
             background: rgba(16, 185, 129, 0.03);
             border: 1px solid var(--border-line);
             padding: 0.8rem;
-            border-radius: 4px;
+            border-radius: 6px;
+        }
+
+        .event-category-title {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--gold-accent);
+            border-bottom: 1px dashed var(--border-line);
+            padding-bottom: 0.4rem;
+            margin-bottom: 0.6rem;
+            text-transform: uppercase;
         }
 
         .checkbox-label {
             display: flex;
-            align-items: center;
-            gap: 10px;
-            font-size: 0.85rem;
+            align-items: flex-start;
+            gap: 8px;
+            font-size: 0.8rem;
             color: var(--text-main);
             font-family: 'Inter', sans-serif;
+            margin-bottom: 0.6rem;
+            cursor: pointer;
         }
 
         .checkbox-label input[type="checkbox"] {
             accent-color: var(--doom-bright);
-            width: 16px; height: 16px;
+            width: 15px; height: 15px;
+            margin-top: 2px;
         }
+
+        .checkbox-label.disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .slot-time-tag {
+            display: block;
+            font-size: 0.68rem;
+            color: var(--gold-accent);
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        /* SQUAD REGISTRATION BOX */
+        .squad-inputs-box {
+            background: rgba(16, 185, 129, 0.04);
+            border: 1px dashed var(--doom-bright);
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 1.2rem;
+        }
+
+        .squad-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.85rem;
+            color: var(--doom-bright);
+            margin-bottom: 0.8rem;
+        }
+
+        .squad-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.8rem;
+        }
+
+        @media (max-width: 500px) {
+            .squad-grid { grid-template-columns: 1fr; }
+        }
+
+        /* FEE CALCULATION DISPLAY */
+        .fee-summary-card {
+            background: rgba(217, 119, 6, 0.08);
+            border: 1px solid rgba(217, 119, 6, 0.3);
+            border-radius: 6px;
+            padding: 0.8rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.2rem;
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        .fee-label { color: var(--steel-silver); font-size: 0.8rem; }
+        .fee-amount { color: var(--gold-accent); font-family: 'Orbitron', sans-serif; font-size: 1.2rem; font-weight: bold; }
 
         .payment-qr-card {
             background: rgba(16, 185, 129, 0.03);
@@ -1009,7 +1127,6 @@
             100% { clip: rect(20px, 9999px, 40px, 0); }
         }
 
-        /* MEDIA QUERIES FOR CLEAN MOBILE DISPLAY */
         @media (max-width: 850px) {
             .nav-links { display: none; }
             .mobile-toggle { display: block; }
@@ -1052,10 +1169,12 @@
         </div>
     </div>
 
-    <!-- CLEAN TOP NAVIGATION BAR -->
+    <!-- CLEAN TOP NAVIGATION BAR WITH WHITE BACKGROUND CONTAINED LOGO -->
     <nav>
         <div class="nav-brand">
-            <div class="nav-logo-icon">C</div>
+            <div class="nav-logo-container">
+                <img src="logo.png" alt="Cyvesta Logo" class="nav-logo-img">
+            </div>
             <div class="logo">CYVESTA<span>'26</span></div>
         </div>
         
@@ -1083,8 +1202,12 @@
     <!-- INSTITUTIONAL COLLEGE BRANDING HEADER -->
     <header class="college-banner">
         <div class="college-banner-name">Aalim Muhammed Salegh College of Engineering</div>
-        <div class="college-banner-sub">NAAC Accredited Institution • Approved by AICTE & Affiliated to Anna University</div>
-        <div class="college-banner-accreditation">COUNSELLING CODE: 1101 • ISO 9001:2015 CERTIFIED</div>
+        <div class="college-banner-sub">NAAC Accredited Institution • Approved by AICTE</div>
+        <div class="college-banner-accreditation">
+            <span>COUNSELLING CODE: 1101</span> • 
+            <span class="autonomous-tag">AUTONOMOUS</span> • 
+            <span>ISO 9001:2015 CERTIFIED</span>
+        </div>
     </header>
 
     <main>
@@ -1106,7 +1229,7 @@
             <div class="meta-badges">
                 <div class="badge">DATE: 12TH SEPTEMBER 2026</div>
                 <div class="badge badge-gold">PRIZE POOL: COMING SOON</div>
-                <div class="badge">REGISTRATION FEE: 150/- PER HEAD</div>
+                <div class="badge">REGISTRATION FEE: ₹150 PER HEAD (₹200 FOR FF SQUAD)</div>
             </div>
 
             <div class="cta-group">
@@ -1123,7 +1246,7 @@
                 <!-- Cypherix CTF Card -->
                 <div class="card" onclick="openEventModal('cypherix')">
                     <div>
-                        <div class="card-tag">DIRECTIVE #01 • OFFENSIVE</div>
+                        <div class="card-tag">TECHNICAL • SLOT 1 (11:00 AM - 12:30 PM)</div>
                         <h3 class="card-title">Cypherix</h3>
                         <p class="card-desc">The flagship jeopardy-style Capture The Flag challenge. Infiltrate systems, reverse engineer binaries, crack cryptography, and extract high-value flags.</p>
                         <button class="btn-details">
@@ -1132,7 +1255,7 @@
                         </button>
                     </div>
                     <div class="card-meta">
-                        <span>FORMAT: TEAMS (1-3)</span>
+                        <span>COORDINATOR: HASHWATH T</span>
                         <span>CTF ARENA</span>
                     </div>
                 </div>
@@ -1140,7 +1263,7 @@
                 <!-- Bug & Bet Card -->
                 <div class="card" onclick="openEventModal('bugbet')">
                     <div>
-                        <div class="card-tag">DIRECTIVE #02 • CODE ANALYSIS</div>
+                        <div class="card-tag">TECHNICAL • SLOT 2 (01:00 PM - 02:00 PM)</div>
                         <h3 class="card-title">Bug & Bet</h3>
                         <p class="card-desc">Analyze. Bet. Debug. Win. Start with 100 virtual coins, choose your bugs wisely, place your bets, fix the code, and maximize your balance before time runs out.</p>
                         <button class="btn-details">
@@ -1149,33 +1272,16 @@
                         </button>
                     </div>
                     <div class="card-meta">
-                        <span>FORMAT: 1–2 PARTICIPANTS</span>
+                        <span>COORDINATOR: MERLIN</span>
                         <span>100 COINS INITIAL</span>
                     </div>
                 </div>
 
-                <!-- BID BANG BOOM Card -->
-                <div class="card" onclick="openEventModal('bidbang')">
+                <!-- Byte Strike Card (Renamed from CodeOps) -->
+                <div class="card" onclick="openEventModal('bytestrike')">
                     <div>
-                        <div class="card-tag">DIRECTIVE #03 • STRATEGY & BIDDING</div>
-                        <h3 class="card-title">ALL IN</h3>
-                        <p class="card-desc">A strategic bidding game where teams compete in challenges using smart bids and teamwork. Special Sabotage Cards – Steal & Freeze add unexpected twists to every bid!</p>
-                        <button class="btn-details">
-                            <span>VIEW PROTOCOL SPECS</span>
-                            <span>&rarr;</span>
-                        </button>
-                    </div>
-                    <div class="card-meta">
-                        <span>FORMAT: TEAMS (3-4)</span>
-                        <span>SPECIAL CARDS ACTIVE</span>
-                    </div>
-                </div>
-
-                <!-- CodeOps Card -->
-                <div class="card" onclick="openEventModal('codeops')">
-                    <div>
-                        <div class="card-tag">DIRECTIVE #04 • PROGRAMMING</div>
-                        <h3 class="card-title">CodeOps</h3>
+                        <div class="card-tag">TECHNICAL • SLOT 3 (02:00 PM - 03:00 PM)</div>
+                        <h3 class="card-title">Byte Strike</h3>
                         <p class="card-desc">A competitive programming challenge testing participant logic, algorithm design, writing clean code, and speed under time constraints.</p>
                         <button class="btn-details">
                             <span>VIEW PROTOCOL SPECS</span>
@@ -1183,7 +1289,7 @@
                         </button>
                     </div>
                     <div class="card-meta">
-                        <span>FORMAT: INDIVIDUAL</span>
+                        <span>COORDINATOR: SATHAK</span>
                         <span>SPEED & ALGO</span>
                     </div>
                 </div>
@@ -1191,7 +1297,7 @@
                 <!-- Zero Clue Card -->
                 <div class="card" onclick="openEventModal('zeroclue')">
                     <div>
-                        <div class="card-tag">DIRECTIVE #05 • BLIND CODING</div>
+                        <div class="card-tag">TECHNICAL • SLOT 4 (03:00 PM - 04:00 PM)</div>
                         <h3 class="card-title">Zero Clue</h3>
                         <p class="card-desc">Test your muscle memory and pure logical flow. Solve 4 programming challenges with your monitor switched OFF for the first 20 minutes!</p>
                         <button class="btn-details">
@@ -1200,67 +1306,16 @@
                         </button>
                     </div>
                     <div class="card-meta">
-                        <span>FORMAT: INDIVIDUAL</span>
+                        <span>COORDINATOR: REHAN</span>
                         <span>BLIND CODING</span>
-                    </div>
-                </div>
-
-                <!-- Box Cricket Card -->
-                <div class="card" onclick="openEventModal('boxcricket')">
-                    <div>
-                        <div class="card-tag">DIRECTIVE #06 • SPORTS ARENA</div>
-                        <h3 class="card-title">Boundry Wars (Cricket)</h3>
-                        <p class="card-desc">High-octane knockout box cricket tournament. Fast-paced 3-over matches with underarm bowling and boundary-only action!</p>
-                        <button class="btn-details">
-                            <span>VIEW PROTOCOL SPECS</span>
-                            <span>&rarr;</span>
-                        </button>
-                    </div>
-                    <div class="card-meta">
-                        <span>FORMAT: TEAMS (4)</span>
-                        <span>KNOCKOUTS</span>
-                    </div>
-                </div>
-
-                <!-- Kickoff Free Fire Card -->
-                <div class="card" onclick="openEventModal('freefire')">
-                    <div>
-                        <div class="card-tag">DIRECTIVE #07 • ESPORTS SHOWDOWN</div>
-                        <h3 class="card-title">Kickoff Free Fire</h3>
-                        <p class="card-desc">Ultimate 4v4 Clash Squad battle! 8 rounds of non-stop movement, fast Gloo Wall pushes, precise headshots, and high-stakes squad coordination.</p>
-                        <button class="btn-details">
-                            <span>VIEW PROTOCOL SPECS</span>
-                            <span>&rarr;</span>
-                        </button>
-                    </div>
-                    <div class="card-meta">
-                        <span>FORMAT: 4v4 SQUAD</span>
-                        <span>CLASH SQUAD</span>
-                    </div>
-                </div>
-
-                <!-- Kickoff eFootball Card -->
-                <div class="card" onclick="openEventModal('efootball')">
-                    <div>
-                        <div class="card-tag">DIRECTIVE #08 • ESPORTS SHOWDOWN</div>
-                        <h3 class="card-title">Kickoff eFootball</h3>
-                        <p class="card-desc">A fast-paced 1v1 football knockout tournament. Win-or-go-home matches in intense group stages to claim the ultimate championship prize!</p>
-                        <button class="btn-details">
-                            <span>VIEW PROTOCOL SPECS</span>
-                            <span>&rarr;</span>
-                        </button>
-                    </div>
-                    <div class="card-meta">
-                        <span>FORMAT: 1v1 SOLO</span>
-                        <span>KNOCKOUT</span>
                     </div>
                 </div>
 
                 <!-- bidx battle ground Card -->
                 <div class="card" onclick="openEventModal('bidx')">
                     <div>
-                        <div class="card-tag">DIRECTIVE #09 • STRATEGY & AUCTION</div>
-                        <h3 class="card-title">bidx battle ground</h3>
+                        <div class="card-tag">NON-TECHNICAL • SLOT 1 (11:00 AM - 12:30 PM)</div>
+                        <h3 class="card-title">Bidding Wars (bidx)</h3>
                         <p class="card-desc">A fast-paced competitive auction game where teams strategically bid virtual money to outsmart opponents, manage budgets, and build the highest-value collection.</p>
                         <button class="btn-details">
                             <span>VIEW PROTOCOL SPECS</span>
@@ -1268,17 +1323,68 @@
                         </button>
                     </div>
                     <div class="card-meta">
-                        <span>FORMAT: TEAMS</span>
+                        <span>COORDINATOR: VALARMATHI</span>
                         <span>AUCTION WARS</span>
+                    </div>
+                </div>
+
+                <!-- Bid Bang Boom Card (Renamed from ALL IN) -->
+                <div class="card" onclick="openEventModal('bidbang')">
+                    <div>
+                        <div class="card-tag">NON-TECHNICAL • SLOT 2 (01:00 PM - 02:00 PM)</div>
+                        <h3 class="card-title">Bid Bang Boom</h3>
+                        <p class="card-desc">A strategic bidding game where teams compete in challenges using smart bids and teamwork. Special Sabotage Cards – Steal & Freeze add unexpected twists to every bid!</p>
+                        <button class="btn-details">
+                            <span>VIEW PROTOCOL SPECS</span>
+                            <span>&rarr;</span>
+                        </button>
+                    </div>
+                    <div class="card-meta">
+                        <span>COORDINATOR: SALMA NAZREEN</span>
+                        <span>SPECIAL CARDS ACTIVE</span>
+                    </div>
+                </div>
+
+                <!-- Kickoff Free Fire & eFootball Card -->
+                <div class="card" onclick="openEventModal('esports')">
+                    <div>
+                        <div class="card-tag">NON-TECHNICAL • SLOT 3 (02:00 PM - 03:00 PM)</div>
+                        <h3 class="card-title">Esports (Free Fire / eFootball)</h3>
+                        <p class="card-desc">Ultimate gaming showdown featuring Clash Squad Free Fire battles and fast-paced 1v1 eFootball knockout tournaments!</p>
+                        <button class="btn-details">
+                            <span>VIEW PROTOCOL SPECS</span>
+                            <span>&rarr;</span>
+                        </button>
+                    </div>
+                    <div class="card-meta">
+                        <span>COORDINATOR: ABDULLAH</span>
+                        <span>ESPORTS ARENA</span>
+                    </div>
+                </div>
+
+                <!-- Box Cricket Card -->
+                <div class="card" onclick="openEventModal('boxcricket')">
+                    <div>
+                        <div class="card-tag">NON-TECHNICAL • SLOT 4 (03:00 PM - 04:00 PM)</div>
+                        <h3 class="card-title">Boundary Wars (Cricket)</h3>
+                        <p class="card-desc">High-octane knockout box cricket tournament. Fast-paced 3-over matches with underarm bowling and boundary-only action!</p>
+                        <button class="btn-details">
+                            <span>VIEW PROTOCOL SPECS</span>
+                            <span>&rarr;</span>
+                        </button>
+                    </div>
+                    <div class="card-meta">
+                        <span>COORDINATOR: ARSHAD</span>
+                        <span>KNOCKOUTS</span>
                     </div>
                 </div>
             </div>
         </section>
 
-        <!-- Scroll Reveal Timeline Section -->
+        <!-- Dynamic Timeline Section with Time Slots -->
         <section class="section-container" id="timeline">
-            <h2 class="section-header">Incursion Schedule</h2>
-            <div class="section-sub">// 12TH SEPTEMBER 2026 • AUTO HIDE ON SCROLL UP</div>
+            <h2 class="section-header">Incursion Schedule & Time Slots</h2>
+            <div class="section-sub">// 12TH SEPTEMBER 2026 • OFFICIAL EVENT TIMETABLE</div>
 
             <div class="timeline">
                 <div class="timeline-item left">
@@ -1293,7 +1399,7 @@
                 <div class="timeline-item right">
                     <div class="timeline-dot"></div>
                     <div class="timeline-content">
-                        <div class="timeline-time">09:30 AM - 10:15 AM</div>
+                        <div class="timeline-time">09:30 AM - 10:30 AM</div>
                         <div class="timeline-title">Keynote Protocol</div>
                         <p style="font-size: 0.85rem; color: var(--text-muted);">Opening ceremony & briefing on Doom's Directives.</p>
                     </div>
@@ -1302,27 +1408,45 @@
                 <div class="timeline-item left">
                     <div class="timeline-dot"></div>
                     <div class="timeline-content">
-                        <div class="timeline-time">10:30 AM - 01:30 PM</div>
-                        <div class="timeline-title">Phase I: Directives Live</div>
-                        <p style="font-size: 0.85rem; color: var(--text-muted);">Technical, Coding, and Esports Directives commence across designated grounds & labs.</p>
+                        <div class="timeline-time">11:00 AM - 12:30 PM (SLOT 1)</div>
+                        <div class="timeline-title">Cypherix (Tech) vs Bidding Wars (Non-Tech)</div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted);">Coordinators: Hashwath T (Cypherix) & Valarmathi (Bidding Wars)</p>
                     </div>
                 </div>
 
                 <div class="timeline-item right">
                     <div class="timeline-dot"></div>
                     <div class="timeline-content">
-                        <div class="timeline-time">01:30 PM - 02:30 PM</div>
-                        <div class="timeline-title">Tactical Recharge</div>
-                        <p style="font-size: 0.85rem; color: var(--text-muted);">Networking session & lunch break.</p>
+                        <div class="timeline-time">12:30 PM - 01:00 PM</div>
+                        <div class="timeline-title">Tactical Lunch Break</div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted);">Networking session & cafeteria recharge.</p>
                     </div>
                 </div>
 
                 <div class="timeline-item left">
                     <div class="timeline-dot"></div>
                     <div class="timeline-content">
-                        <div class="timeline-time">02:30 PM - 04:00 PM</div>
-                        <div class="timeline-title">Final Showdown & Awards</div>
-                        <p style="font-size: 0.85rem; color: var(--text-muted);">Leaderboard reveals, prize distribution & closing ceremony.</p>
+                        <div class="timeline-time">01:00 PM - 02:00 PM (SLOT 2)</div>
+                        <div class="timeline-title">Bug and Bet (Tech) vs Bid Bang Boom (Non-Tech)</div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted);">Coordinators: Merlin (Bug and Bet) & Salma Nazreen (Bid Bang Boom)</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item right">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-time">02:00 PM - 03:00 PM (SLOT 3)</div>
+                        <div class="timeline-title">Byte Strike (Tech) vs Esports Arena (Non-Tech)</div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted);">Coordinators: Sathak (Byte Strike) & Abdullah (Esports)</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item left">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-time">03:00 PM - 04:00 PM (SLOT 4)</div>
+                        <div class="timeline-title">Zero Clue (Tech) vs Boundary Wars (Non-Tech)</div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted);">Coordinators: Rehan (Zero Clue) & Arshad (Boundary Wars)</p>
                     </div>
                 </div>
             </div>
@@ -1382,8 +1506,8 @@
                 <div class="contact-card">
                     <h4>Student Coordinators</h4>
                     <p style="font-size: 0.85rem; color: var(--text-muted);">
-                        Contact:+91 9940391155<br>
-                        Coordinators: IMTHIAZ,JAMUNA<br>
+                        Contact: +91 9940391155<br>
+                        Coordinators: IMTHIAZ, JAMUNA<br>
                         <strong>Instagram:</strong> AMS_CYBER
                     </p>
                 </div>
@@ -1411,20 +1535,26 @@
             <div id="eventModalBody">
                 <!-- Dynamically populated via JavaScript -->
             </div>
-            <button class="btn-primary" style="width: 100%; margin-top: 1rem;" onclick="closeEventModal(); openModal();">Registrate For This Directive</button>
+            <button class="btn-primary" style="width: 100%; margin-top: 1rem;" onclick="closeEventModal(); openModal();">Register For This Directive</button>
         </div>
     </div>
 
-    <!-- Registration Modal (UPDATED FORM) -->
+    <!-- Registration Modal -->
     <div class="modal-overlay" id="modalOverlay">
         <div class="modal">
             <button class="modal-close" onclick="closeModal()">&times;</button>
             <h3 style="font-family: 'Orbitron', sans-serif; color: var(--doom-bright); margin-bottom: 0.3rem;">REGISTRATION PROTOCOL</h3>
-            <p style="color: var(--text-muted); font-size: 0.8rem; margin-bottom: 1.2rem;">Complete all fields to sync your clearance entry to the Supabase database.</p>
+            <p style="color: var(--text-muted); font-size: 0.8rem; margin-bottom: 1rem;">Select your registration category and build your custom schedule.</p>
+
+            <!-- REGISTRATION MODE SWITCHER -->
+            <div class="reg-type-selector">
+                <div class="reg-type-btn active" id="btnStandardMode" onclick="setRegMode('standard')">STANDARD REGISTRATION (₹150)</div>
+                <div class="reg-type-btn" id="btnFFMode" onclick="setRegMode('freefire')">FREE FIRE SQUAD ONLY (₹200)</div>
+            </div>
 
             <form id="registrationForm" onsubmit="handleFormSubmit(event)">
                 <div class="form-group">
-                    <label>NAME <span>*</span></label>
+                    <label>APPLICANT / SQUAD LEADER NAME <span>*</span></label>
                     <input type="text" id="regName" class="form-input" placeholder="Your full name" required>
                 </div>
 
@@ -1460,26 +1590,123 @@
                     </select>
                 </div>
 
-                <div class="form-group">
-                    <label>EVENTS TO PARTICIPATE <span>*</span></label>
-                    <div class="checkbox-group">
-                        <label class="checkbox-label"><input type="checkbox" name="events" value="Cypherix (CTF)"> Cypherix (CTF)</label>
-                        <label class="checkbox-label"><input type="checkbox" name="events" value="Bug & Bet"> Bug & Bet</label>
-                        <label class="checkbox-label"><input type="checkbox" name="events" value="BID BANG BOOM"> All In</label>
-                        <label class="checkbox-label"><input type="checkbox" name="events" value="CodeOps: Logic Under Pressure"> CodeOps: Logic Under Pressure</label>
-                        <label class="checkbox-label"><input type="checkbox" name="events" value="Zero Clue"> Zero Clue</label>
-                        <label class="checkbox-label"><input type="checkbox" name="events" value="Box Cricket"> Boundary Wars (Cricket)</label>
-                        <label class="checkbox-label"><input type="checkbox" name="events" value="Kickoff Free Fire"> Kickoff Free Fire</label>
-                        <label class="checkbox-label"><input type="checkbox" name="events" value="Kickoff eFootball"> Kickoff eFootball</label>
-                        <label class="checkbox-label"><input type="checkbox" name="events" value="bidx battle ground"> bidx battle ground</label>
+                <!-- STANDARD EVENT SELECTION (SIDE-BY-SIDE GRID) -->
+                <div id="standardEventsContainer" class="form-group">
+                    <label>SELECT UP TO 4 EVENTS (MAX 2 TECH & 2 NON-TECH) <span>*</span></label>
+                    <p style="font-size: 0.72rem; color: var(--text-muted); margin-bottom: 0.5rem;">Note: Overlapping events in the same time slot will automatically lock.</p>
+                    
+                    <div class="events-side-by-side">
+                        <!-- Technical Column -->
+                        <div class="event-category-box">
+                            <div class="event-category-title">TECHNICAL EVENTS</div>
+                            
+                            <label class="checkbox-label" id="lbl_cypherix">
+                                <input type="checkbox" name="events" value="Cypherix (CTF)" data-category="tech" data-slot="slot1" onchange="validateEventSelections()">
+                                <div>
+                                    Cypherix (CTF)
+                                    <span class="slot-time-tag">11:00 AM - 12:30 PM</span>
+                                </div>
+                            </label>
+
+                            <label class="checkbox-label" id="lbl_bugbet">
+                                <input type="checkbox" name="events" value="Bug & Bet" data-category="tech" data-slot="slot2" onchange="validateEventSelections()">
+                                <div>
+                                    Bug & Bet
+                                    <span class="slot-time-tag">01:00 PM - 02:00 PM</span>
+                                </div>
+                            </label>
+
+                            <label class="checkbox-label" id="lbl_bytestrike">
+                                <input type="checkbox" name="events" value="Byte Strike" data-category="tech" data-slot="slot3" onchange="validateEventSelections()">
+                                <div>
+                                    Byte Strike
+                                    <span class="slot-time-tag">02:00 PM - 03:00 PM</span>
+                                </div>
+                            </label>
+
+                            <label class="checkbox-label" id="lbl_zeroclue">
+                                <input type="checkbox" name="events" value="Zero Clue" data-category="tech" data-slot="slot4" onchange="validateEventSelections()">
+                                <div>
+                                    Zero Clue
+                                    <span class="slot-time-tag">03:00 PM - 04:00 PM</span>
+                                </div>
+                            </label>
+                        </div>
+
+                        <!-- Non-Technical Column -->
+                        <div class="event-category-box">
+                            <div class="event-category-title">NON-TECHNICAL EVENTS</div>
+                            
+                            <label class="checkbox-label" id="lbl_bidx">
+                                <input type="checkbox" name="events" value="Bidding Wars (bidx)" data-category="nontech" data-slot="slot1" onchange="validateEventSelections()">
+                                <div>
+                                    Bidding Wars (bidx)
+                                    <span class="slot-time-tag">11:00 AM - 12:30 PM</span>
+                                </div>
+                            </label>
+
+                            <label class="checkbox-label" id="lbl_bidbang">
+                                <input type="checkbox" name="events" value="Bid Bang Boom" data-category="nontech" data-slot="slot2" onchange="validateEventSelections()">
+                                <div>
+                                    Bid Bang Boom
+                                    <span class="slot-time-tag">01:00 PM - 02:00 PM</span>
+                                </div>
+                            </label>
+
+                            <label class="checkbox-label" id="lbl_efootball">
+                                <input type="checkbox" name="events" value="Kickoff eFootball" data-category="nontech" data-slot="slot3" onchange="validateEventSelections()">
+                                <div>
+                                    Kickoff eFootball
+                                    <span class="slot-time-tag">02:00 PM - 03:00 PM</span>
+                                </div>
+                            </label>
+
+                            <label class="checkbox-label" id="lbl_boxcricket">
+                                <input type="checkbox" name="events" value="Boundary Wars (Cricket)" data-category="nontech" data-slot="slot4" onchange="validateEventSelections()">
+                                <div>
+                                    Boundary Wars (Cricket)
+                                    <span class="slot-time-tag">03:00 PM - 04:00 PM</span>
+                                </div>
+                            </label>
+                        </div>
                     </div>
                 </div>
 
-                <div class="payment-qr-card">
-                    <div style="font-family: 'Share Tech Mono', monospace; font-size: 0.75rem; color: var(--gold-accent);">SCAN QR TO PAY ENTRY FEE</div>
+                <!-- FREE FIRE SQUAD INPUTS (HIDDEN BY DEFAULT) -->
+                <div id="ffSquadContainer" class="squad-inputs-box" style="display: none;">
+                    <div class="squad-title">FREE FIRE CLASH SQUAD ROSTER (₹200 TOTAL ENTRY)</div>
+                    <p style="font-size: 0.72rem; color: var(--text-muted); margin-bottom: 0.8rem;">Squad Leader details are captured above. Enter your 3 team members below:</p>
                     
-                    <!-- YOUR PHONEPE QR IMAGE -->
-                    <img src="payment-qr.png" alt="PhonePe QR Code - Mr Nabeel Mohamed" style="width: 180px; height: auto; border-radius: 6px; border: 1px solid var(--doom-bright); margin: 0.5rem 0; box-shadow: 0 0 15px var(--doom-glow);">
+                    <div class="squad-grid">
+                        <div class="form-group" style="margin-bottom: 0.5rem;">
+                            <label>SQUAD NAME <span>*</span></label>
+                            <input type="text" id="ffSquadName" class="form-input" placeholder="e.g. Doom Slayers">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0.5rem;">
+                            <label>PLAYER 2 IN-GAME NAME <span>*</span></label>
+                            <input type="text" id="ffP2" class="form-input" placeholder="Player 2 IGN">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0.5rem;">
+                            <label>PLAYER 3 IN-GAME NAME <span>*</span></label>
+                            <input type="text" id="ffP3" class="form-input" placeholder="Player 3 IGN">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0.5rem;">
+                            <label>PLAYER 4 IN-GAME NAME <span>*</span></label>
+                            <input type="text" id="ffP4" class="form-input" placeholder="Player 4 IGN">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- DYNAMIC PAYMENT SUMMARY BOX -->
+                <div class="fee-summary-card">
+                    <span class="fee-label">TOTAL REGISTRATION FEE:</span>
+                    <span class="fee-amount" id="feeDisplay">₹150</span>
+                </div>
+
+                <div class="payment-qr-card">
+                    <div style="font-family: 'Share Tech Mono', monospace; font-size: 0.75rem; color: var(--gold-accent);">SCAN QR TO PAY REGISTRATION FEE</div>
+                    
+                    <img src="payment-qr.png" alt="PhonePe QR Code - Mr Nabeel Mohamed">
                     
                     <div style="font-size: 0.85rem; font-family: 'Orbitron', sans-serif; color: var(--text-main); margin-top: 0.3rem;">Mr Nabeel Mohamed</div>
                     <div style="font-size: 0.8rem; font-family: 'Share Tech Mono', monospace; color: var(--doom-bright);">ACCEPTED VIA PHONEPE / UPI</div>
@@ -1500,7 +1727,7 @@
     </footer>
 
     <script>
-        /* 0. DYNAMIC SUPABASE INITIALIZATION VIA ENVIRONMENT VARIABLES ENDPOINT */
+        /* 0. DYNAMIC SUPABASE INITIALIZATION */
         let supabaseClient = null;
 
         async function initSupabase() {
@@ -1520,124 +1747,96 @@
 
         initSupabase();
 
-        /* GLOBAL EVENT DATA FOR POPUP CARDS */
+        /* GLOBAL EVENT DATA FOR POPUP SPECS MODAL */
         const eventData = {
             cypherix: {
-                tag: "DIRECTIVE #01 • OFFENSIVE CTF",
+                tag: "TECHNICAL • SLOT 1 (11:00 AM - 12:30 PM)",
                 title: "Cypherix",
                 desc: "Step into the ultimate multiversal CTF arena. Infiltrate protected server nodes, solve cryptography challenges, analyze web vulnerabilities, and reverse engineer binaries to uncover high-value flags.",
                 rules: [
                     "Jeopardy-style CTF structure with web, crypto, and forensics categories.",
                     "Team Size: 1 to 3 operatives per team.",
                     "Strictly no flag sharing, outside aid, or malicious network denial attacks.",
-                    "Submit flags in standard CTF format before time expires."
+                    "Coordinator: Hashwath T"
                 ]
             },
             bugbet: {
-                tag: "DIRECTIVE #02 • CODE ANALYSIS & BETTING",
+                tag: "TECHNICAL • SLOT 2 (01:00 PM - 02:00 PM)",
                 title: "Bug & Bet",
                 desc: "Analyze. Bet. Debug. Win. Start with 100 virtual coins, choose your bugs wisely, place your bets, fix the code, and maximize your balance before time runs out.",
                 rules: [
                     "Team Size: 1–2 participants.",
                     "Language Options: Choose C, Java, or Python.",
                     "Start with 100 virtual coins to place tactical bets on bug difficulties.",
-                    "Complete all debugging challenges within the given time limit.",
-                    "No copying or sharing solutions.",
-                    "Mobile phones are strictly restricted during the round."
+                    "Coordinator: Merlin"
                 ]
             },
             bidbang: {
-                tag: "DIRECTIVE #03 • STRATEGY & BIDDING",
-                title: "ALL IN",
+                tag: "NON-TECHNICAL • SLOT 2 (01:00 PM - 02:00 PM)",
+                title: "Bid Bang Boom",
                 desc: "A strategic bidding game where teams compete in challenges using smart bids and teamwork. Special Sabotage Cards – Steal & Freeze add unexpected twists and make every bid more exciting!",
                 rules: [
                     "Team Size: 3–4 members per team.",
                     "Bid wisely on each challenge using allocated credits.",
-                    "Highest bidder gets the challenge to execute for points.",
                     "Use Steal or Freeze cards strategically to disrupt opponent teams.",
-                    "Complete challenges to earn points — the highest total score wins! 🏆"
+                    "Coordinator: Salma Nazreen"
                 ]
             },
-            codeops: {
-                tag: "DIRECTIVE #04 • PROGRAMMING",
-                title: "CodeOps: Logic Under Pressure",
-                desc: "CodeOps: Logic Under Pressure is a competitive programming challenge designed to test participants' logical thinking, problem-solving ability, coding skills, and speed. Participants will be given a series of programming problems ranging from basic to intermediate difficulty. They must analyze the problem, develop an appropriate algorithm, write the code, and successfully execute it within the given time.",
+            bytestrike: {
+                tag: "TECHNICAL • SLOT 3 (02:00 PM - 03:00 PM)",
+                title: "Byte Strike",
+                desc: "A competitive programming challenge designed to test participants' logical thinking, problem-solving ability, coding skills, and speed under time constraints.",
                 rules: [
                     "Single participant event.",
                     "Language choice: C, Java, or Python.",
-                    "Analyze algorithms, write code, and execute within the allotted time limit.",
-                    "No copying or external assistance permitted."
+                    "Analyze algorithms, write code, and execute within allotted time.",
+                    "Coordinator: Sathak"
                 ]
             },
             zeroclue: {
-                tag: "DIRECTIVE #05 • BLIND CODING",
+                tag: "TECHNICAL • SLOT 4 (03:00 PM - 04:00 PM)",
                 title: "Zero Clue",
-                desc: "A set of 4 questions will be given. For the first 20 minutes, the monitor will be turned off, and participants must type their code without seeing the screen. The final 10 minutes will be for viewing their code and correcting errors.",
+                desc: "A set of 4 questions will be given. For the first 20 minutes, the monitor will be turned off, and participants must type their code without seeing the screen.",
                 rules: [
-                    "Team: Single participant.",
-                    "Choose C, Java, or Python.",
-                    "Complete all challenges within the given time.",
+                    "Single participant event.",
                     "First 20 mins: Monitor turned OFF while typing code.",
                     "Final 10 mins: Monitor turned ON for viewing & bug fixing.",
-                    "No copying or sharing solutions.",
-                    "Mobile phones are strictly restricted."
+                    "Coordinator: Rehan"
                 ]
             },
             boxcricket: {
-                tag: "DIRECTIVE #06 • SPORTS ARENA",
+                tag: "NON-TECHNICAL • SLOT 4 (03:00 PM - 04:00 PM)",
                 title: "Boundary Wars (Cricket)",
                 desc: "High-energy knockouts box cricket tournament! Knockout matches where the winning team advances.",
                 rules: [
                     "Team Size: 4 members per team.",
-                    "Format: Knockout tournament (winning team advances).",
-                    "3 Overs match duration.",
-                    "Underarm bowling only.",
+                    "3 Overs match duration. Underarm bowling only.",
                     "Only Boundaries — No Singles permitted.",
-                    "Throw catch / One Pitch One Hand rules apply.",
-                    "A player can bowl a maximum of 1 over.",
-                    "Bowled & Hit Out rules apply.",
-                    "Super Over included if match is tied.",
-                    "Umpire decision is final!",
-                    "Note: Bat will be provided on-site.",
-                    "Coordinators: Arshath, Manoj, Shafi, Haajith (Contact: 7200164546 - Arshath)"
+                    "Coordinator: Arshad"
                 ]
             },
-            freefire: {
-                tag: "DIRECTIVE #07 • ESPORTS SHOWDOWN",
-                title: "Kickoff Free Fire",
-                desc: "The arena is set for an intense Clash Squad battle! 8 rounds of non-stop action, lightning-fast Gloo Wall pushes, precise headshots, and high-stakes squad coordination. Watch top rosters test their mechanical skills, movement, and tactical shot-calling to claim the ultimate BOOYAH! 🏆⚡",
+            esports: {
+                tag: "NON-TECHNICAL • SLOT 3 (02:00 PM - 03:00 PM)",
+                title: "Esports Arena (Free Fire & eFootball)",
+                desc: "High-stakes esports action! Compete in Clash Squad 4v4 Free Fire or 1v1 eFootball knockouts.",
                 rules: [
-                    "Format: 4v4 Clash Squad mode.",
-                    "8 rounds of intense tactical combat.",
-                    "Strictly fair play — no emulators or third-party tools allowed.",
-                    "Showcase mechanical skill, movement, and squad coordination."
-                ]
-            },
-            efootball: {
-                tag: "DIRECTIVE #08 • ESPORTS SHOWDOWN",
-                title: "Kickoff eFootball",
-                desc: "A fast-paced, high-stakes 1v1 football knockout tournament where every match is win-or-go-home! Face off in intense head-to-head battles with either 4 or 8 participants per group—one loss and you're eliminated, win them all to claim cash prize !!!",
-                rules: [
-                    "Format: 1v1 Solo knockout.",
-                    "Groups of 4 or 8 participants per bracket.",
-                    "Win-or-go-home single elimination.",
-                    "Grand winner claims the championship cash prize!"
+                    "Free Fire: 4v4 Clash Squad format (₹200 per squad).",
+                    "eFootball: 1v1 solo knockout bracket.",
+                    "Coordinator: Abdullah"
                 ]
             },
             bidx: {
-                tag: "DIRECTIVE #09 • STRATEGY & AUCTION",
-                title: "bidx battle ground",
-                desc: "Bidding Wars is a fast-paced competitive auction game where teams compete against each other by strategically bidding their virtual money to win different items, players, challenges, or resources. The goal isn't simply to spend the most—it’s to outsmart opponents, manage your budget, and build the highest-value collection.",
+                tag: "NON-TECHNICAL • SLOT 1 (11:00 AM - 12:30 PM)",
+                title: "Bidding Wars (bidx)",
+                desc: "Bidding Wars is a fast-paced competitive auction game where teams compete against each other by strategically bidding their virtual money.",
                 rules: [
                     "Format: Team-based bidding competition.",
                     "Manage your virtual budget strategically across multiple auction rounds.",
-                    "Bid on items, players, challenges, or resources.",
-                    "Focus on budget optimization and building the highest-value collection to win."
+                    "Coordinator: Valarmathi"
                 ]
             }
         };
 
-        /* FUNCTION TO SHOW POPUP MODAL FOR EVENTS */
         function openEventModal(eventId) {
             const data = eventData[eventId];
             if (!data) return;
@@ -1663,29 +1862,106 @@
         }
 
         function closeEventModalOnOverlay(e) {
-            if (e.target.id === 'eventModalOverlay') {
-                closeEventModal();
+            if (e.target.id === 'eventModalOverlay') closeEventModal();
+        }
+
+        /* REGISTRATION MODE LOGIC (STANDARD VS FREE FIRE) */
+        let currentRegMode = 'standard';
+
+        function setRegMode(mode) {
+            currentRegMode = mode;
+            const btnStandard = document.getElementById('btnStandardMode');
+            const btnFF = document.getElementById('btnFFMode');
+            const standardContainer = document.getElementById('standardEventsContainer');
+            const ffContainer = document.getElementById('ffSquadContainer');
+            const feeDisplay = document.getElementById('feeDisplay');
+
+            if (mode === 'standard') {
+                btnStandard.classList.add('active');
+                btnFF.classList.remove('active');
+                standardContainer.style.display = 'block';
+                ffContainer.style.display = 'none';
+                feeDisplay.textContent = '₹150';
+                
+                // Toggle required attributes for squad
+                document.getElementById('ffSquadName').required = false;
+                document.getElementById('ffP2').required = false;
+                document.getElementById('ffP3').required = false;
+                document.getElementById('ffP4').required = false;
+            } else {
+                btnFF.classList.add('active');
+                btnStandard.classList.remove('active');
+                standardContainer.style.display = 'none';
+                ffContainer.style.display = 'block';
+                feeDisplay.textContent = '₹200';
+
+                document.getElementById('ffSquadName').required = true;
+                document.getElementById('ffP2').required = true;
+                document.getElementById('ffP3').required = true;
+                document.getElementById('ffP4').required = true;
             }
         }
 
-        /* GLOBAL MOUSE TRACKER FOR PARTICLES & CURSOR */
+        /* OVERLAPPING SLOTS & MAX EVENT VALIDATION */
+        function validateEventSelections() {
+            const checkboxes = Array.from(document.querySelectorAll('input[name="events"]'));
+            const checkedBoxes = checkboxes.filter(cb => cb.checked);
+
+            let techCount = 0;
+            let nonTechCount = 0;
+            const selectedSlots = new Set();
+
+            checkedBoxes.forEach(cb => {
+                const cat = cb.dataset.category;
+                const slot = cb.dataset.slot;
+                if (cat === 'tech') techCount++;
+                if (cat === 'nontech') nonTechCount++;
+                selectedSlots.add(slot);
+            });
+
+            checkboxes.forEach(cb => {
+                const cat = cb.dataset.category;
+                const slot = cb.dataset.slot;
+                const label = cb.closest('.checkbox-label');
+
+                if (!cb.checked) {
+                    let disable = false;
+
+                    // Rule 1: Max 2 tech events
+                    if (cat === 'tech' && techCount >= 2) disable = true;
+
+                    // Rule 2: Max 2 non-tech events
+                    if (cat === 'nontech' && nonTechCount >= 2) disable = true;
+
+                    // Rule 3: Total max 4 events
+                    if (checkedBoxes.length >= 4) disable = true;
+
+                    // Rule 4: Overlapping slot lock
+                    if (selectedSlots.has(slot)) disable = true;
+
+                    cb.disabled = disable;
+                    if (disable) {
+                        label.classList.add('disabled');
+                    } else {
+                        label.classList.remove('disabled');
+                    }
+                } else {
+                    cb.disabled = false;
+                    label.classList.remove('disabled');
+                }
+            });
+        }
+
+        /* MOUSE & PARTICLES */
         let mouseX = -1000, mouseY = -1000;
         window.addEventListener('mousemove', (e) => {
             mouseX = e.clientX;
             mouseY = e.clientY;
         });
 
-        /* 1. ENTRY LOADER ANIMATION LOGIC */
         const loaderStatus = document.getElementById('loader-status');
         const entryLoader = document.getElementById('entry-loader');
-
-        const statusMessages = [
-            'CONNECTING TO LATVERIA NODE...',
-            'VERIFYING CYBERSECURITY DIRECTIVES...',
-            'ESTABLISHING ENCRYPTED GRID...',
-            'SYSTEM READY.'
-        ];
-
+        const statusMessages = ['CONNECTING TO LATVERIA NODE...', 'VERIFYING CYBERSECURITY DIRECTIVES...', 'ESTABLISHING ENCRYPTED GRID...', 'SYSTEM READY.'];
         let msgIdx = 0;
         const statusInterval = setInterval(() => {
             msgIdx++;
@@ -1697,13 +1973,11 @@
             }
         }, 500);
 
-        /* 2. CUSTOM CURSOR TRACKING LOGIC (DESKTOP ONLY) */
         const cursorDot = document.getElementById('cursor-dot');
         const cursorFollower = document.getElementById('cursor-follower');
 
         if (cursorDot && cursorFollower) {
             let followerX = 0, followerY = 0;
-
             window.addEventListener('mousemove', (e) => {
                 cursorDot.style.left = `${e.clientX}px`;
                 cursorDot.style.top = `${e.clientY}px`;
@@ -1718,23 +1992,16 @@
             function animateCursor() {
                 followerX += (mouseX - followerX) * 0.15;
                 followerY += (mouseY - followerY) * 0.15;
-
                 cursorFollower.style.left = `${followerX}px`;
                 cursorFollower.style.top = `${followerY}px`;
-
                 requestAnimationFrame(animateCursor);
             }
             animateCursor();
         }
 
-        /* 3. ALWAYS-RUNNING INTERACTIVE CANVAS PARTICLES (WITH MOUSE ATTRACTION) */
         const canvas = document.getElementById('particle-canvas');
         const ctx = canvas.getContext('2d');
-
-        function resizeCanvas() {
-            canvas.width = window.innerWidth;
-            canvas.height = window.innerHeight;
-        }
+        function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
         resizeCanvas();
         window.addEventListener('resize', resizeCanvas);
 
@@ -1752,8 +2019,6 @@
                 const dx = mouseX - this.x;
                 const dy = mouseY - this.y;
                 const dist = Math.sqrt(dx * dx + dy * dy);
-
-                /* Pull particles gently toward mouse cursor when nearby */
                 if (dist < 150) {
                     this.x += (dx / dist) * 0.9;
                     this.y += (dy / dist) * 0.9;
@@ -1761,10 +2026,7 @@
                     this.x += this.speedX;
                     this.y += this.speedY;
                 }
-
-                if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) {
-                    this.reset();
-                }
+                if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) this.reset();
             }
             draw() {
                 ctx.fillStyle = `rgba(52, 211, 153, ${this.opacity})`;
@@ -1775,14 +2037,11 @@
         }
 
         const particles = Array.from({ length: 70 }, () => new Particle());
-
         function animateParticles() {
             ctx.clearRect(0, 0, canvas.width, canvas.height);
             for (let i = 0; i < particles.length; i++) {
                 particles[i].update();
                 particles[i].draw();
-
-                /* Draw interconnecting lines between nearby particles */
                 for (let j = i + 1; j < particles.length; j++) {
                     const dx = particles[i].x - particles[j].x;
                     const dy = particles[i].y - particles[j].y;
@@ -1801,53 +2060,35 @@
         }
         animateParticles();
 
-        /* 4. MOBILE DRAWER TOGGLE */
         function toggleMobileDrawer() {
-            const drawer = document.getElementById('mobileDrawer');
-            drawer.classList.toggle('open');
+            document.getElementById('mobileDrawer').classList.toggle('open');
         }
 
-        /* 5. LIVE TELEMETRY LOG STREAM GENERATOR */
         const logContent = document.getElementById('logContent');
-        const telemetryMsgs = [
-            'Packet decrypted.',
-            'Firewall rule added.',
-            'Scanning node 192.168.1.1',
-            'Subsystem active.',
-            'Auth key verified.'
-        ];
-
+        const telemetryMsgs = ['Packet decrypted.', 'Firewall rule added.', 'Scanning node 192.168.1.1', 'Subsystem active.', 'Auth key verified.'];
         setInterval(() => {
             if (logContent) {
                 const randomMsg = telemetryMsgs[Math.floor(Math.random() * telemetryMsgs.length)];
                 const div = document.createElement('div');
                 div.textContent = `[${new Date().toLocaleTimeString().split(' ')[0]}] ${randomMsg}`;
                 logContent.appendChild(div);
-                if (logContent.children.length > 3) {
-                    logContent.removeChild(logContent.children[0]);
-                }
+                if (logContent.children.length > 3) logContent.removeChild(logContent.children[0]);
             }
         }, 2200);
 
-        /* 6. TIMELINE OBSERVER */
         const timelineObserver = new IntersectionObserver((entries) => {
             entries.forEach(entry => {
-                if (entry.isIntersecting) {
-                    entry.target.classList.add('reveal');
-                } else {
-                    entry.target.classList.remove('reveal');
-                }
+                if (entry.isIntersecting) entry.target.classList.add('reveal');
+                else entry.target.classList.remove('reveal');
             });
         }, { threshold: 0.2 });
 
-        document.querySelectorAll('.timeline-item').forEach(item => {
-            timelineObserver.observe(item);
-        });
+        document.querySelectorAll('.timeline-item').forEach(item => timelineObserver.observe(item));
 
-        /* 7. MODAL & COUNTDOWN LOGIC WITH SUPABASE FORM TRANSMISSION */
         function openModal() { document.getElementById('modalOverlay').classList.add('active'); }
         function closeModal() { document.getElementById('modalOverlay').classList.remove('active'); }
 
+        /* SUBMISSION HANDLER WITH SQUAD PASS GENERATION */
         async function handleFormSubmit(e) {
             e.preventDefault();
 
@@ -1857,11 +2098,29 @@
             }
 
             const submitBtn = document.getElementById('submitBtn');
-            const selectedEvents = Array.from(document.querySelectorAll('input[name="events"]:checked')).map(cb => cb.value);
+            let selectedEvents = [];
+            let squadData = null;
+            let registrationFee = 150;
+            let squadPassId = null;
 
-            if (selectedEvents.length === 0) {
-                alert('Please select at least one event to participate.');
-                return;
+            if (currentRegMode === 'standard') {
+                selectedEvents = Array.from(document.querySelectorAll('input[name="events"]:checked')).map(cb => cb.value);
+                if (selectedEvents.length === 0) {
+                    alert('Please select at least one event to participate.');
+                    return;
+                }
+            } else {
+                selectedEvents = ['Kickoff Free Fire (Squad)'];
+                registrationFee = 200;
+                squadPassId = 'FF-PASS-' + Math.floor(100000 + Math.random() * 900000);
+                squadData = {
+                    squad_name: document.getElementById('ffSquadName').value,
+                    leader: document.getElementById('regName').value,
+                    player_2: document.getElementById('ffP2').value,
+                    player_3: document.getElementById('ffP3').value,
+                    player_4: document.getElementById('ffP4').value,
+                    squad_pass_id: squadPassId
+                };
             }
 
             const name = document.getElementById('regName').value;
@@ -1885,21 +2144,18 @@
                 const fileExt = file.name.split('.').pop();
                 const fileName = `${Date.now()}_${Math.random().toString(36).substring(7)}.${fileExt}`;
 
-                /* Upload screenshot to Supabase Storage Bucket */
                 const { data: uploadData, error: uploadError } = await supabaseClient.storage
                     .from('payment-proofs')
                     .upload(fileName, file);
 
                 if (uploadError) throw uploadError;
 
-                /* Get public URL for screenshot */
                 const { data: urlData } = supabaseClient.storage
                     .from('payment-proofs')
                     .getPublicUrl(fileName);
 
                 const paymentProofUrl = urlData.publicUrl;
 
-                /* Insert entry into Supabase database table */
                 const { error: insertError } = await supabaseClient
                     .from('registrations')
                     .insert([{
@@ -1910,13 +2166,22 @@
                         department: department,
                         year_of_study: year_of_study,
                         events: selectedEvents,
-                        payment_proof_url: paymentProofUrl
+                        payment_proof_url: paymentProofUrl,
+                        fee_paid: registrationFee,
+                        squad_pass_id: squadPassId,
+                        squad_details: squadData
                     }]);
 
                 if (insertError) throw insertError;
 
-                alert('Registration submitted successfully to the database!');
+                if (squadPassId) {
+                    alert(`Registration successful!\n\nYour Free Fire Squad Pass ID: ${squadPassId}\nKeep this pass ID safe for tournament check-in!`);
+                } else {
+                    alert('Registration submitted successfully to the database!');
+                }
+
                 document.getElementById('registrationForm').reset();
+                setRegMode('standard');
                 closeModal();
             } catch (err) {
                 console.error(err);
