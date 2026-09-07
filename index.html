@@ -367,7 +367,7 @@
             border-bottom: 1px solid rgba(16, 185, 129, 0.1);
         }
 
-        /* INSTITUTIONAL BANNER */
+        /* INSTITUTIONAL BANNER WITH LOGO SPACE NEAR COLLEGE NAME */
         .college-banner {
             text-align: center;
             padding: 1.5rem 1rem 0.5rem 1rem;
@@ -375,9 +375,34 @@
             border-bottom: 1px dashed var(--border-line);
         }
 
+        .college-banner-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin-bottom: 4px;
+        }
+
+        .banner-logo-container {
+            background: #ffffff;
+            padding: 4px 10px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
+        }
+
+        .banner-logo-img {
+            height: 38px;
+            width: auto;
+            object-fit: contain;
+        }
+
         .college-banner-name {
             font-family: 'Orbitron', sans-serif;
-            font-size: clamp(0.85rem, 3vw, 1.2rem);
+            font-size: clamp(0.95rem, 3vw, 1.3rem);
             font-weight: 800;
             letter-spacing: 1.5px;
             color: var(--text-main);
@@ -395,7 +420,7 @@
             font-family: 'Share Tech Mono', monospace;
             font-size: 0.7rem;
             color: var(--gold-accent);
-            margin-top: 2px;
+            margin-top: 4px;
             display: flex;
             align-items: center;
             justify-content: center;
@@ -908,22 +933,24 @@
             color: var(--text-main);
         }
 
-        /* REGISTRATION TYPE TOGGLE */
+        /* REGISTRATION TYPE TOGGLE (3-BUTTON REGISTRATION SYSTEM) */
         .reg-type-selector {
             display: flex;
-            gap: 1rem;
+            gap: 0.6rem;
             margin-bottom: 1.2rem;
+            flex-wrap: wrap;
         }
 
         .reg-type-btn {
             flex: 1;
-            padding: 0.75rem;
+            min-width: 150px;
+            padding: 0.65rem 0.5rem;
             background: rgba(16, 185, 129, 0.05);
             border: 1px solid var(--border-line);
             border-radius: 6px;
             color: var(--text-muted);
             font-family: 'Orbitron', sans-serif;
-            font-size: 0.8rem;
+            font-size: 0.72rem;
             text-align: center;
             cursor: pointer;
             transition: all 0.3s ease;
@@ -994,7 +1021,7 @@
             font-family: 'Share Tech Mono', monospace;
         }
 
-        /* SQUAD REGISTRATION BOX */
+        /* SQUAD & SOLO GAMING REGISTRATION BOXES */
         .squad-inputs-box {
             background: rgba(16, 185, 129, 0.04);
             border: 1px dashed var(--doom-bright);
@@ -1173,7 +1200,6 @@
     <nav>
         <div class="nav-brand">
             <div class="nav-logo-container">
-                <img src="logo.png" alt="Cyvesta Logo" class="nav-logo-img">
             </div>
             <div class="logo">CYVESTA<span>'26</span></div>
         </div>
@@ -1199,9 +1225,14 @@
         <a href="javascript:void(0)" onclick="toggleMobileDrawer(); openModal();" class="nav-btn" style="text-align:center; margin-top: 1rem;">Register</a>
     </div>
 
-    <!-- INSTITUTIONAL COLLEGE BRANDING HEADER -->
+    <!-- INSTITUTIONAL COLLEGE BRANDING HEADER WITH LOGO NEAR COLLEGE NAME -->
     <header class="college-banner">
-        <div class="college-banner-name">Aalim Muhammed Salegh College of Engineering</div>
+        <div class="college-banner-header">
+            <div class="banner-logo-container">
+                <img src="logo.png" alt="AMSCE Logo" class="banner-logo-img">
+            </div>
+            <div class="college-banner-name">Aalim Muhammed Salegh College of Engineering</div>
+        </div>
         <div class="college-banner-sub">NAAC Accredited Institution • Approved by AICTE</div>
         <div class="college-banner-accreditation">
             <span>COUNSELLING CODE: 1101</span> • 
@@ -1228,8 +1259,8 @@
 
             <div class="meta-badges">
                 <div class="badge">DATE: 12TH SEPTEMBER 2026</div>
-                <div class="badge badge-gold">PRIZE POOL: COMING SOON</div>
-                <div class="badge">REGISTRATION FEE: ₹150 PER HEAD (₹200 FOR FF SQUAD)</div>
+                <div class="badge badge-gold">PRIZE POOL:₹10,000 </div>
+                <div class="badge">REGISTRATION FEE: ₹150 PER HEAD (₹200 FOR FF SQUAD (OR) EFOOTBALL SOLO)</div>
             </div>
 
             <div class="cta-group">
@@ -1340,7 +1371,7 @@
                         </button>
                     </div>
                     <div class="card-meta">
-                        <span>COORDINATOR: SALMA NAZREEN</span>
+                        <span>COORDINATOR: AYISHA AFRAH</span>
                         <span>SPECIAL CARDS ACTIVE</span>
                     </div>
                 </div>
@@ -1428,7 +1459,7 @@
                     <div class="timeline-content">
                         <div class="timeline-time">01:00 PM - 02:00 PM (SLOT 2)</div>
                         <div class="timeline-title">Bug and Bet (Tech) vs Bid Bang Boom (Non-Tech)</div>
-                        <p style="font-size: 0.85rem; color: var(--text-muted);">Coordinators: Merlin (Bug and Bet) & Salma Nazreen (Bid Bang Boom)</p>
+                        <p style="font-size: 0.85rem; color: var(--text-muted);">Coordinators: Merlin (Bug and Bet) & Ayisha afrah (Bid Bang Boom)</p>
                     </div>
                 </div>
 
@@ -1546,10 +1577,11 @@
             <h3 style="font-family: 'Orbitron', sans-serif; color: var(--doom-bright); margin-bottom: 0.3rem;">REGISTRATION PROTOCOL</h3>
             <p style="color: var(--text-muted); font-size: 0.8rem; margin-bottom: 1rem;">Select your registration category and build your custom schedule.</p>
 
-            <!-- REGISTRATION MODE SWITCHER -->
+            <!-- REGISTRATION MODE SWITCHER (STANDARD vs FREE FIRE vs EFOOTBALL) -->
             <div class="reg-type-selector">
-                <div class="reg-type-btn active" id="btnStandardMode" onclick="setRegMode('standard')">STANDARD REGISTRATION (₹150)</div>
-                <div class="reg-type-btn" id="btnFFMode" onclick="setRegMode('freefire')">FREE FIRE SQUAD ONLY (₹200)</div>
+                <div class="reg-type-btn active" id="btnStandardMode" onclick="setRegMode('standard')">STANDARD (₹150)</div>
+                <div class="reg-type-btn" id="btnFFMode" onclick="setRegMode('freefire')">FREE FIRE SQUAD (₹200)</div>
+                <div class="reg-type-btn" id="btnEFootballMode" onclick="setRegMode('efootball')">eFOOTBALL SOLO (₹200)</div>
             </div>
 
             <form id="registrationForm" onsubmit="handleFormSubmit(event)">
@@ -1592,8 +1624,8 @@
 
                 <!-- STANDARD EVENT SELECTION (SIDE-BY-SIDE GRID) -->
                 <div id="standardEventsContainer" class="form-group">
-                    <label>SELECT UP TO 4 EVENTS (MAX 2 TECH & 2 NON-TECH) <span>*</span></label>
-                    <p style="font-size: 0.72rem; color: var(--text-muted); margin-bottom: 0.5rem;">Note: Overlapping events in the same time slot will automatically lock.</p>
+                    <label>SELECT YOUR EVENTS <span>*</span></label>
+                    <p style="font-size: 0.72rem; color: var(--text-muted); margin-bottom: 0.5rem;">Note: Overlapping events in the exact same time slot will automatically lock out.</p>
                     
                     <div class="events-side-by-side">
                         <!-- Technical Column -->
@@ -1653,14 +1685,6 @@
                                 </div>
                             </label>
 
-                            <label class="checkbox-label" id="lbl_efootball">
-                                <input type="checkbox" name="events" value="Kickoff eFootball" data-category="nontech" data-slot="slot3" onchange="validateEventSelections()">
-                                <div>
-                                    Kickoff eFootball
-                                    <span class="slot-time-tag">02:00 PM - 03:00 PM</span>
-                                </div>
-                            </label>
-
                             <label class="checkbox-label" id="lbl_boxcricket">
                                 <input type="checkbox" name="events" value="Boundary Wars (Cricket)" data-category="nontech" data-slot="slot4" onchange="validateEventSelections()">
                                 <div>
@@ -1694,6 +1718,17 @@
                             <label>PLAYER 4 IN-GAME NAME <span>*</span></label>
                             <input type="text" id="ffP4" class="form-input" placeholder="Player 4 IGN">
                         </div>
+                    </div>
+                </div>
+
+                <!-- eFOOTBALL SOLO INPUTS (HIDDEN BY DEFAULT) -->
+                <div id="eFootballContainer" class="squad-inputs-box" style="display: none;">
+                    <div class="squad-title">eFOOTBALL 1v1 SOLO REGISTRATION (₹200 ENTRY)</div>
+                    <p style="font-size: 0.72rem; color: var(--text-muted); margin-bottom: 0.8rem;">Slot 3 (02:00 PM - 03:00 PM). Enter your in-game details for bracket seeding:</p>
+                    
+                    <div class="form-group" style="margin-bottom: 0.5rem;">
+                        <label>IN-GAME USERNAME / TEAM NAME <span>*</span></label>
+                        <input type="text" id="efGamerName" class="form-input" placeholder="e.g. CyberStriker_99">
                     </div>
                 </div>
 
@@ -1779,7 +1814,7 @@
                     "Team Size: 3–4 members per team.",
                     "Bid wisely on each challenge using allocated credits.",
                     "Use Steal or Freeze cards strategically to disrupt opponent teams.",
-                    "Coordinator: Salma Nazreen"
+                    "Coordinator:Ayisha afrah"
                 ]
             },
             bytestrike: {
@@ -1821,7 +1856,7 @@
                 desc: "High-stakes esports action! Compete in Clash Squad 4v4 Free Fire or 1v1 eFootball knockouts.",
                 rules: [
                     "Free Fire: 4v4 Clash Squad format (₹200 per squad).",
-                    "eFootball: 1v1 solo knockout bracket.",
+                    "eFootball: 1v1 solo knockout bracket (₹200 solo entry).",
                     "Coordinator: Abdullah"
                 ]
             },
@@ -1865,33 +1900,41 @@
             if (e.target.id === 'eventModalOverlay') closeEventModal();
         }
 
-        /* REGISTRATION MODE LOGIC (STANDARD VS FREE FIRE) */
+        /* REGISTRATION MODE LOGIC (STANDARD vs FREE FIRE vs eFOOTBALL) */
         let currentRegMode = 'standard';
 
         function setRegMode(mode) {
             currentRegMode = mode;
             const btnStandard = document.getElementById('btnStandardMode');
             const btnFF = document.getElementById('btnFFMode');
+            const btnEF = document.getElementById('btnEFootballMode');
+
             const standardContainer = document.getElementById('standardEventsContainer');
             const ffContainer = document.getElementById('ffSquadContainer');
+            const efContainer = document.getElementById('eFootballContainer');
             const feeDisplay = document.getElementById('feeDisplay');
+
+            // Reset mandatory fields
+            document.getElementById('ffSquadName').required = false;
+            document.getElementById('ffP2').required = false;
+            document.getElementById('ffP3').required = false;
+            document.getElementById('ffP4').required = false;
+            document.getElementById('efGamerName').required = false;
+
+            btnStandard.classList.remove('active');
+            btnFF.classList.remove('active');
+            btnEF.classList.remove('active');
+
+            standardContainer.style.display = 'none';
+            ffContainer.style.display = 'none';
+            efContainer.style.display = 'none';
 
             if (mode === 'standard') {
                 btnStandard.classList.add('active');
-                btnFF.classList.remove('active');
                 standardContainer.style.display = 'block';
-                ffContainer.style.display = 'none';
                 feeDisplay.textContent = '₹150';
-                
-                // Toggle required attributes for squad
-                document.getElementById('ffSquadName').required = false;
-                document.getElementById('ffP2').required = false;
-                document.getElementById('ffP3').required = false;
-                document.getElementById('ffP4').required = false;
-            } else {
+            } else if (mode === 'freefire') {
                 btnFF.classList.add('active');
-                btnStandard.classList.remove('active');
-                standardContainer.style.display = 'none';
                 ffContainer.style.display = 'block';
                 feeDisplay.textContent = '₹200';
 
@@ -1899,50 +1942,37 @@
                 document.getElementById('ffP2').required = true;
                 document.getElementById('ffP3').required = true;
                 document.getElementById('ffP4').required = true;
+            } else if (mode === 'efootball') {
+                btnEF.classList.add('active');
+                efContainer.style.display = 'block';
+                feeDisplay.textContent = '₹200';
+
+                document.getElementById('efGamerName').required = true;
             }
         }
 
-        /* OVERLAPPING SLOTS & MAX EVENT VALIDATION */
+        /* DYNAMIC OVERLAPPING TIME-SLOT LOCKING (ALLOWS ALL TECH OR ALL NON-TECH) */
         function validateEventSelections() {
             const checkboxes = Array.from(document.querySelectorAll('input[name="events"]'));
             const checkedBoxes = checkboxes.filter(cb => cb.checked);
 
-            let techCount = 0;
-            let nonTechCount = 0;
             const selectedSlots = new Set();
 
             checkedBoxes.forEach(cb => {
-                const cat = cb.dataset.category;
-                const slot = cb.dataset.slot;
-                if (cat === 'tech') techCount++;
-                if (cat === 'nontech') nonTechCount++;
-                selectedSlots.add(slot);
+                selectedSlots.add(cb.dataset.slot);
             });
 
             checkboxes.forEach(cb => {
-                const cat = cb.dataset.category;
                 const slot = cb.dataset.slot;
                 const label = cb.closest('.checkbox-label');
 
                 if (!cb.checked) {
-                    let disable = false;
-
-                    // Rule 1: Max 2 tech events
-                    if (cat === 'tech' && techCount >= 2) disable = true;
-
-                    // Rule 2: Max 2 non-tech events
-                    if (cat === 'nontech' && nonTechCount >= 2) disable = true;
-
-                    // Rule 3: Total max 4 events
-                    if (checkedBoxes.length >= 4) disable = true;
-
-                    // Rule 4: Overlapping slot lock
-                    if (selectedSlots.has(slot)) disable = true;
-
-                    cb.disabled = disable;
-                    if (disable) {
+                    // Lock out if another event in the same time slot is already chosen
+                    if (selectedSlots.has(slot)) {
+                        cb.disabled = true;
                         label.classList.add('disabled');
                     } else {
+                        cb.disabled = false;
                         label.classList.remove('disabled');
                     }
                 } else {
@@ -2088,7 +2118,7 @@
         function openModal() { document.getElementById('modalOverlay').classList.add('active'); }
         function closeModal() { document.getElementById('modalOverlay').classList.remove('active'); }
 
-        /* SUBMISSION HANDLER WITH SQUAD PASS GENERATION */
+        /* SUBMISSION HANDLER WITH DYNAMIC REGISTRATION PASS GENERATION */
         async function handleFormSubmit(e) {
             e.preventDefault();
 
@@ -2099,9 +2129,9 @@
 
             const submitBtn = document.getElementById('submitBtn');
             let selectedEvents = [];
-            let squadData = null;
+            let extraDetails = null;
             let registrationFee = 150;
-            let squadPassId = null;
+            let passId = null;
 
             if (currentRegMode === 'standard') {
                 selectedEvents = Array.from(document.querySelectorAll('input[name="events"]:checked')).map(cb => cb.value);
@@ -2109,17 +2139,25 @@
                     alert('Please select at least one event to participate.');
                     return;
                 }
-            } else {
+            } else if (currentRegMode === 'freefire') {
                 selectedEvents = ['Kickoff Free Fire (Squad)'];
                 registrationFee = 200;
-                squadPassId = 'FF-PASS-' + Math.floor(100000 + Math.random() * 900000);
-                squadData = {
+                passId = 'FF-PASS-' + Math.floor(100000 + Math.random() * 900000);
+                extraDetails = {
                     squad_name: document.getElementById('ffSquadName').value,
                     leader: document.getElementById('regName').value,
                     player_2: document.getElementById('ffP2').value,
                     player_3: document.getElementById('ffP3').value,
                     player_4: document.getElementById('ffP4').value,
-                    squad_pass_id: squadPassId
+                    pass_id: passId
+                };
+            } else if (currentRegMode === 'efootball') {
+                selectedEvents = ['Kickoff eFootball (Solo 1v1)'];
+                registrationFee = 200;
+                passId = 'EF-PASS-' + Math.floor(100000 + Math.random() * 900000);
+                extraDetails = {
+                    gamer_tag: document.getElementById('efGamerName').value,
+                    pass_id: passId
                 };
             }
 
@@ -2168,14 +2206,14 @@
                         events: selectedEvents,
                         payment_proof_url: paymentProofUrl,
                         fee_paid: registrationFee,
-                        squad_pass_id: squadPassId,
-                        squad_details: squadData
+                        squad_pass_id: passId,
+                        squad_details: extraDetails
                     }]);
 
                 if (insertError) throw insertError;
 
-                if (squadPassId) {
-                    alert(`Registration successful!\n\nYour Free Fire Squad Pass ID: ${squadPassId}\nKeep this pass ID safe for tournament check-in!`);
+                if (passId) {
+                    alert(`Registration successful!\n\nYour Gaming Pass ID: ${passId}\nKeep this pass ID safe for tournament check-in!`);
                 } else {
                     alert('Registration submitted successfully to the database!');
                 }
