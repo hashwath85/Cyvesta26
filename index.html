@@ -1260,7 +1260,7 @@
             <div class="meta-badges">
                 <div class="badge">DATE: 12TH SEPTEMBER 2026</div>
                 <div class="badge badge-gold">PRIZE POOL:₹10,000 </div>
-                <div class="badge">REGISTRATION FEE: ₹150 PER HEAD (₹200 FOR FF SQUAD (OR) EFOOTBALL SOLO)</div>
+                <div class="badge">REGISTRATION FEE: ₹150 PER HEAD (₹200 FOR FF SQUAD (OR) ₹100 FOR EFOOTBALL SOLO)</div>
             </div>
 
             <div class="cta-group">
@@ -1581,7 +1581,7 @@
             <div class="reg-type-selector">
                 <div class="reg-type-btn active" id="btnStandardMode" onclick="setRegMode('standard')">STANDARD (₹150)</div>
                 <div class="reg-type-btn" id="btnFFMode" onclick="setRegMode('freefire')">FREE FIRE SQUAD (₹200)</div>
-                <div class="reg-type-btn" id="btnEFootballMode" onclick="setRegMode('efootball')">eFOOTBALL SOLO (₹200)</div>
+                <div class="reg-type-btn" id="btnEFootballMode" onclick="setRegMode('efootball')">eFOOTBALL SOLO (₹100)</div>
             </div>
 
             <form id="registrationForm" onsubmit="handleFormSubmit(event)">
@@ -1723,7 +1723,7 @@
 
                 <!-- eFOOTBALL SOLO INPUTS (HIDDEN BY DEFAULT) -->
                 <div id="eFootballContainer" class="squad-inputs-box" style="display: none;">
-                    <div class="squad-title">eFOOTBALL 1v1 SOLO REGISTRATION (₹200 ENTRY)</div>
+                    <div class="squad-title">eFOOTBALL 1v1 SOLO REGISTRATION (₹100 ENTRY)</div>
                     <p style="font-size: 0.72rem; color: var(--text-muted); margin-bottom: 0.8rem;">Slot 3 (02:00 PM - 03:00 PM). Enter your in-game details for bracket seeding:</p>
                     
                     <div class="form-group" style="margin-bottom: 0.5rem;">
@@ -1856,7 +1856,7 @@
                 desc: "High-stakes esports action! Compete in Clash Squad 4v4 Free Fire or 1v1 eFootball knockouts.",
                 rules: [
                     "Free Fire: 4v4 Clash Squad format (₹200 per squad).",
-                    "eFootball: 1v1 solo knockout bracket (₹200 solo entry).",
+                    "eFootball: 1v1 solo knockout bracket (₹100 solo entry).",
                     "Coordinator: Abdullah"
                 ]
             },
@@ -1945,7 +1945,7 @@
             } else if (mode === 'efootball') {
                 btnEF.classList.add('active');
                 efContainer.style.display = 'block';
-                feeDisplay.textContent = '₹200';
+                feeDisplay.textContent = '₹100';
 
                 document.getElementById('efGamerName').required = true;
             }
@@ -2153,7 +2153,7 @@
                 };
             } else if (currentRegMode === 'efootball') {
                 selectedEvents = ['Kickoff eFootball (Solo 1v1)'];
-                registrationFee = 200;
+                registrationFee = 100;
                 passId = 'EF-PASS-' + Math.floor(100000 + Math.random() * 900000);
                 extraDetails = {
                     gamer_tag: document.getElementById('efGamerName').value,
