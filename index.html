@@ -636,6 +636,2353 @@
 
         .card::before {
             content: '';
+            position: absolute;
+            top: var(--mouse-y, -100px);
+            left: var(--mouse-x, -100px);
+            width: 200px; height: 200px;
+            background: radial-gradient(circle, var(--doom-glow), transparent 70%);
+            transform: translate(-50%, -50%);
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+            opacity: 0;
+        }
+
+        .card:hover::before { opacity: 1; }
+
+        .card:hover {
+            transform: translateY(-6px);
+            border-color: var(--doom-bright);
+            box-shadow: 0 10px 30px rgba(0, 0, 0, 0.8), 0 0 20px var(--doom-glow);
+        }
+
+        .card-tag {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--gold-accent);
+            margin-bottom: 0.5rem;
+        }
+
+        .card-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.2rem;
+            margin-bottom: 0.8rem;
+            color: var(--text-main);
+        }
+
+        .card-desc {
+            color: var(--text-muted);
+            font-size: 0.88rem;
+            margin-bottom: 1.2rem;
+            flex-grow: 1;
+        }
+
+        .btn-details {
+            background: rgba(16, 185, 129, 0.1);
+            border: 1px solid var(--doom-green);
+            color: var(--doom-bright);
+            font-family: 'Share Tech Mono', monospace;
+            padding: 0.5rem 1rem;
+            border-radius: 4px;
+            font-size: 0.8rem;
+            width: 100%;
+            margin-bottom: 1rem;
+            transition: all 0.3s ease;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .card:hover .btn-details {
+            background: var(--doom-green);
+            color: #000;
+            font-weight: bold;
+        }
+
+        .card-meta {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--doom-bright);
+            border-top: 1px dashed var(--border-line);
+            padding-top: 1rem;
+            display: flex;
+            justify-content: space-between;
+        }
+
+        /* DYNAMIC TIMELINE */
+        .timeline {
+            position: relative;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 2rem 0;
+        }
+
+        .timeline::before {
+            content: '';
+            position: absolute;
+            top: 0; left: 50%;
+            width: 2px; height: 100%;
+            background: var(--border-line);
+            transform: translateX(-50%);
+        }
+
+        .timeline-item {
+            padding: 1.5rem 2rem;
+            position: relative;
+            width: 50%;
+            opacity: 0;
+            transform: translateY(40px) scale(0.95);
+            transition: opacity 0.5s cubic-bezier(0.16, 1, 0.3, 1), transform 0.5s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        .timeline-item.reveal {
+            opacity: 1;
+            transform: translateY(0) scale(1);
+        }
+
+        .timeline-item.left { left: 0; text-align: right; }
+        .timeline-item.right { left: 50%; text-align: left; }
+
+        .timeline-dot {
+            position: absolute;
+            top: 2rem;
+            width: 14px; height: 14px;
+            background: var(--doom-bright);
+            border-radius: 50%;
+            box-shadow: 0 0 12px var(--doom-bright);
+            transition: transform 0.3s ease;
+        }
+
+        .timeline-item.reveal .timeline-dot { transform: scale(1.3); }
+
+        .timeline-item.left .timeline-dot { right: -7px; }
+        .timeline-item.right .timeline-dot { left: -7px; }
+
+        .timeline-content {
+            background: var(--surface-card);
+            border: 1px solid var(--border-line);
+            padding: 1.2rem 1.5rem;
+            border-radius: 8px;
+        }
+
+        .timeline-time {
+            font-family: 'Share Tech Mono', monospace;
+            color: var(--gold-accent);
+            font-size: 0.8rem;
+        }
+
+        .timeline-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1rem;
+            color: var(--text-main);
+            margin: 0.3rem 0;
+        }
+
+        /* COUNTDOWN BOX */
+        .countdown-box {
+            background: var(--surface-card);
+            border: 1px solid var(--border-line);
+            border-radius: 12px;
+            padding: 2.5rem 1rem;
+            text-align: center;
+        }
+
+        .timer {
+            display: flex;
+            justify-content: center;
+            gap: 1.2rem;
+            margin-top: 1.5rem;
+            flex-wrap: wrap;
+        }
+
+        .time-unit {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-width: 65px;
+        }
+
+        .time-unit .number {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(2rem, 5vw, 2.8rem);
+            font-weight: 800;
+            color: var(--doom-bright);
+            text-shadow: 0 0 15px var(--doom-glow);
+        }
+
+        .time-unit .label {
+            font-size: 0.7rem;
+            color: var(--text-muted);
+            font-family: 'Share Tech Mono', monospace;
+            letter-spacing: 1px;
+        }
+
+        /* MODAL OVERLAYS & FORM STYLES */
+        .modal-overlay {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background: rgba(3, 6, 4, 0.88);
+            backdrop-filter: blur(12px);
+            z-index: 10000;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            opacity: 0;
+            pointer-events: none;
+            transition: opacity 0.3s ease;
+        }
+
+        .modal-overlay.active {
+            opacity: 1;
+            pointer-events: auto;
+        }
+
+        .modal {
+            background: #08100b;
+            border: 1px solid var(--doom-green);
+            border-radius: 8px;
+            width: 95%; max-width: 680px;
+            padding: 2rem;
+            box-shadow: 0 0 40px var(--doom-glow);
+            position: relative;
+            max-height: 88vh;
+            overflow-y: auto;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 1rem; right: 1.2rem;
+            background: none; border: none;
+            color: var(--text-muted);
+            font-size: 1.5rem;
+        }
+
+        /* EVENT DETAILS POPUP MODAL STYLES */
+        .event-modal-tag {
+            font-family: 'Share Tech Mono', monospace;
+            color: var(--gold-accent);
+            font-size: 0.8rem;
+            margin-bottom: 0.3rem;
+        }
+
+        .event-modal-title {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--doom-bright);
+            font-size: 1.5rem;
+            margin-bottom: 1rem;
+            text-shadow: 0 0 10px var(--doom-glow);
+        }
+
+        .event-modal-desc {
+            color: var(--text-main);
+            font-size: 0.9rem;
+            margin-bottom: 1.2rem;
+            line-height: 1.6;
+        }
+
+        .event-modal-section {
+            background: rgba(16, 185, 129, 0.05);
+            border-left: 3px solid var(--doom-bright);
+            padding: 1rem;
+            border-radius: 0 6px 6px 0;
+            margin-bottom: 1.2rem;
+        }
+
+        .event-modal-section-title {
+            font-family: 'Share Tech Mono', monospace;
+            color: var(--doom-bright);
+            font-size: 0.85rem;
+            margin-bottom: 0.5rem;
+            text-transform: uppercase;
+        }
+
+        .event-modal-list {
+            list-style: none;
+            padding-left: 0;
+        }
+
+        .event-modal-list li {
+            position: relative;
+            padding-left: 15px;
+            font-size: 0.85rem;
+            color: var(--text-muted);
+            margin-bottom: 0.4rem;
+        }
+
+        .event-modal-list li::before {
+            content: '>';
+            position: absolute;
+            left: 0;
+            color: var(--gold-accent);
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        .form-group { margin-bottom: 1.2rem; }
+        .form-group label {
+            display: block;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--doom-bright);
+            margin-bottom: 0.4rem;
+        }
+
+        .form-group label span {
+            color: var(--gold-accent);
+        }
+
+        .form-input {
+            width: 100%; padding: 0.75rem;
+            background: rgba(16, 185, 129, 0.05);
+            border: 1px solid var(--border-line);
+            border-radius: 4px;
+            color: var(--text-main);
+            outline: none;
+            font-family: 'Inter', sans-serif;
+            font-size: 0.85rem;
+        }
+
+        .form-input option {
+            background: #08100b;
+            color: var(--text-main);
+        }
+
+        /* REGISTRATION TYPE TOGGLE (4-BUTTON REGISTRATION SYSTEM) */
+        .reg-type-selector {
+            display: flex;
+            gap: 0.5rem;
+            margin-bottom: 1.2rem;
+            flex-wrap: wrap;
+        }
+
+        .reg-type-btn {
+            flex: 1;
+            min-width: 130px;
+            padding: 0.65rem 0.4rem;
+            background: rgba(16, 185, 129, 0.05);
+            border: 1px solid var(--border-line);
+            border-radius: 6px;
+            color: var(--text-muted);
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.68rem;
+            text-align: center;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .reg-type-btn.active {
+            background: rgba(16, 185, 129, 0.2);
+            border-color: var(--doom-bright);
+            color: var(--doom-bright);
+            box-shadow: 0 0 12px var(--doom-glow);
+        }
+
+        /* SIDE-BY-SIDE EVENTS GRID */
+        .events-side-by-side {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 1rem;
+            margin-top: 0.5rem;
+        }
+
+        @media (max-width: 600px) {
+            .events-side-by-side { grid-template-columns: 1fr; }
+        }
+
+        .event-category-box {
+            background: rgba(16, 185, 129, 0.03);
+            border: 1px solid var(--border-line);
+            padding: 0.8rem;
+            border-radius: 6px;
+        }
+
+        .event-category-title {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--gold-accent);
+            border-bottom: 1px dashed var(--border-line);
+            padding-bottom: 0.4rem;
+            margin-bottom: 0.6rem;
+            text-transform: uppercase;
+        }
+
+        .checkbox-label {
+            display: flex;
+            align-items: flex-start;
+            gap: 8px;
+            font-size: 0.8rem;
+            color: var(--text-main);
+            font-family: 'Inter', sans-serif;
+            margin-bottom: 0.6rem;
+            cursor: pointer;
+            transition: background 0.3s ease;
+            padding: 4px;
+            border-radius: 4px;
+        }
+
+        .checkbox-label.highlight-select {
+            background: rgba(52, 211, 153, 0.25);
+            border: 1px solid var(--doom-bright);
+        }
+
+        .checkbox-label input[type="checkbox"] {
+            accent-color: var(--doom-bright);
+            width: 15px; height: 15px;
+            margin-top: 2px;
+        }
+
+        .checkbox-label.disabled {
+            opacity: 0.4;
+            cursor: not-allowed;
+        }
+
+        .slot-time-tag {
+            display: block;
+            font-size: 0.68rem;
+            color: var(--gold-accent);
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        /* SQUAD & SOLO GAMING REGISTRATION BOXES */
+        .squad-inputs-box {
+            background: rgba(16, 185, 129, 0.04);
+            border: 1px dashed var(--doom-bright);
+            padding: 1rem;
+            border-radius: 6px;
+            margin-bottom: 1.2rem;
+        }
+
+        .squad-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 0.85rem;
+            color: var(--doom-bright);
+            margin-bottom: 0.8rem;
+        }
+
+        .squad-grid {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 0.8rem;
+        }
+
+        @media (max-width: 500px) {
+            .squad-grid { grid-template-columns: 1fr; }
+        }
+
+        /* FEE CALCULATION DISPLAY */
+        .fee-summary-card {
+            background: rgba(217, 119, 6, 0.08);
+            border: 1px solid rgba(217, 119, 6, 0.3);
+            border-radius: 6px;
+            padding: 0.8rem 1rem;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 1.2rem;
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        .fee-label { color: var(--steel-silver); font-size: 0.8rem; }
+        .fee-amount { color: var(--gold-accent); font-family: 'Orbitron', sans-serif; font-size: 1.2rem; font-weight: bold; }
+
+        .payment-qr-card {
+            background: rgba(16, 185, 129, 0.03);
+            border: 1px solid var(--border-line);
+            border-radius: 6px;
+            padding: 1rem;
+            text-align: center;
+            margin-bottom: 1.2rem;
+        }
+
+        .payment-qr-card img {
+            width: 180px;
+            height: auto;
+            border-radius: 6px;
+            border: 1px solid var(--doom-bright);
+            margin: 0.5rem 0;
+            box-shadow: 0 0 15px var(--doom-glow);
+        }
+
+        /* CONTACT & MAP */
+        .contact-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+            gap: 1.5rem;
+            margin-top: 1.5rem;
+        }
+
+        .contact-card {
+            background: var(--surface-card);
+            border: 1px solid var(--border-line);
+            padding: 1.5rem;
+            border-radius: 8px;
+        }
+
+        .contact-card h4 {
+            font-family: 'Orbitron', sans-serif;
+            color: var(--doom-bright);
+            margin-bottom: 0.8rem;
+            font-size: 1rem;
+        }
+
+        .map-container {
+            margin-top: 2rem;
+            background: var(--surface-card);
+            border: 1px solid var(--border-line);
+            border-radius: 8px;
+            padding: 0.8rem;
+        }
+
+        .map-container iframe {
+            width: 100%;
+            height: 300px;
+            border: none;
+            border-radius: 6px;
+        }
+
+        footer {
+            border-top: 1px solid var(--border-line);
+            padding: 2rem 5%;
+            text-align: center;
+            font-size: 0.8rem;
+            color: var(--text-muted);
+            margin-top: 4rem;
+            font-family: 'Share Tech Mono', monospace;
+        }
+
+        /* KEYFRAME ANIMATIONS */
+        @keyframes spinLoader { 0% { transform: rotate(0deg); } 100% { transform: rotate(360deg); } }
+        @keyframes spinLoaderRev { 0% { transform: rotate(360deg); } 100% { transform: rotate(0deg); } }
+        @keyframes rotateHUD { from { transform: rotate(0deg); } to { transform: rotate(360deg); } }
+        @keyframes scanLine { 0% { top: 0%; opacity: 0; } 15% { opacity: 1; } 85% { opacity: 1; } 100% { top: 100%; opacity: 0; } }
+        @keyframes gridPulse { 0% { opacity: 0.3; } 100% { opacity: 0.7; } }
+        @keyframes pulseDot { 0% { transform: scale(1); opacity: 1; } 50% { transform: scale(1.5); opacity: 0.4; } 100% { transform: scale(1); opacity: 1; } }
+
+        @keyframes glitchAnim {
+            0% { clip: rect(10px, 9999px, 30px, 0); }
+            20% { clip: rect(40px, 9999px, 10px, 0); }
+            40% { clip: rect(25px, 9999px, 50px, 0); }
+            60% { clip: rect(60px, 9999px, 20px, 0); }
+            80% { clip: rect(15px, 9999px, 35px, 0); }
+            100% { clip: rect(30px, 9999px, 5px, 0); }
+        }
+
+        @keyframes glitchAnim2 {
+            0% { clip: rect(30px, 9999px, 10px, 0); }
+            20% { clip: rect(15px, 9999px, 45px, 0); }
+            40% { clip: rect(50px, 9999px, 15px, 0); }
+            60% { clip: rect(5px, 9999px, 60px, 0); }
+            80% { clip: rect(35px, 9999px, 20px, 0); }
+            100% { clip: rect(20px, 9999px, 40px, 0); }
+        }
+
+        @media (max-width: 850px) {
+            .nav-links { display: none; }
+            .mobile-toggle { display: block; }
+            .live-log-widget { display: none; }
+            .timeline::before { left: 20px; }
+            .timeline-item { width: 100%; padding-left: 45px; text-align: left !important; }
+            .timeline-item.right { left: 0; }
+            .timeline-item.left .timeline-dot, .timeline-item.right .timeline-dot { left: 13px; }
+        }
+    </style>
+</head>
+<body>
+
+    <!-- ENTRY ANIMATION SCREEN -->
+    <div id="entry-loader">
+        <div class="loader-ring"></div>
+        <div class="loader-title">CYVESTA <span>'26</span></div>
+        <div class="loader-text" id="loader-status">INITIALIZING TACTICAL PROTOCOLS...</div>
+    </div>
+
+    <!-- CUSTOM CURSOR DOM (DESKTOP ONLY) -->
+    <div id="cursor-dot"></div>
+    <div id="cursor-follower"></div>
+
+    <!-- BACKGROUND CANVAS & OVERLAYS -->
+    <canvas id="particle-canvas"></canvas>
+    <div class="tech-grid"></div>
+    <div class="laser-scanline"></div>
+
+    <!-- LIVE TERMINAL STREAM WIDGET -->
+    <div class="live-log-widget">
+        <div class="live-log-header">
+            <div class="pulse-dot"></div>
+            <span>LIVE TELEMETRY STREAM</span>
+        </div>
+        <div class="live-log-content" id="logContent">
+            <div>[SYS] Grid synced.</div>
+            <div>[NET] Port 8080 active.</div>
+            <div>[SEC] Zero anomalies.</div>
+        </div>
+    </div>
+
+    <!-- CLEAN TOP NAVIGATION BAR WITH WHITE BACKGROUND CONTAINED LOGO -->
+    <nav>
+        <div class="nav-brand">
+            <div class="nav-logo-container">
+            </div>
+            <div class="logo">CYVESTA<span>'26</span></div>
+        </div>
+        
+        <ul class="nav-links">
+            <li><a href="#home">Home</a></li>
+            <li><a href="#events">Events</a></li>
+            <li><a href="#timeline">Timeline</a></li>
+            <li><a href="#contact">Contact</a></li>
+            <li><a href="javascript:void(0)" onclick="openModal()" class="nav-btn">Register</a></li>
+        </ul>
+
+        <button class="mobile-toggle" onclick="toggleMobileDrawer()">&#9776;</button>
+    </nav>
+
+    <!-- MOBILE NAVIGATION DRAWER -->
+    <div class="mobile-drawer" id="mobileDrawer">
+        <button class="mobile-drawer-close" onclick="toggleMobileDrawer()">&times;</button>
+        <a href="#home" onclick="toggleMobileDrawer()">Home</a>
+        <a href="#events" onclick="toggleMobileDrawer()">Events</a>
+        <a href="#timeline" onclick="toggleMobileDrawer()">Timeline</a>
+        <a href="#contact" onclick="toggleMobileDrawer()">Contact</a>
+        <a href="javascript:void(0)" onclick="toggleMobileDrawer(); openModal();" class="nav-btn" style="text-align:center; margin-top: 1rem;">Register</a>
+    </div>
+
+    <!-- INSTITUTIONAL COLLEGE BRANDING HEADER WITH LOGO NEAR COLLEGE NAME -->
+    <header class="college-banner">
+        <div class="college-banner-header">
+            <div class="banner-logo-container">
+                <img src="logo.png" alt="AMSCE Logo" class="banner-logo-img">
+            </div>
+            <div class="college-banner-name">Aalim Muhammed Salegh College of Engineering</div>
+        </div>
+        <div class="college-banner-sub">NAAC Accredited Institution • Approved by AICTE</div>
+        <div class="college-banner-accreditation">
+            <span>COUNSELLING CODE: 1101</span> • 
+            <span class="autonomous-tag">AUTONOMOUS</span> • 
+            <span>ISO 9001:2015 CERTIFIED</span>
+        </div>
+    </header>
+
+    <main>
+        <!-- Hero Section -->
+        <section class="hero" id="home">
+            <div class="hud-ring"></div>
+            <div class="hero-subtitle">
+                <span class="pulse-dot"></span>
+                DEPT OF CYBERSECURITY PRESENTS
+            </div>
+            <h1 class="hero-title glitch" data-text="Cyvesta'26">
+                Cyvesta'26
+                <span class="doomsday">AMSPHERE</span>
+            </h1>
+            <p class="hero-description">
+                Multiversal security boundaries are collapsing. Step into Doom's domain at Aalim Muhammed Salegh College of Engineering to prove your tactical prowess in CTF, OSINT, competitive coding, and esports showdowns.
+            </p>
+
+            <div class="meta-badges">
+                <div class="badge">DATE: 12TH SEPTEMBER 2026</div>
+                <div class="badge badge-gold">PRIZE POOL: ₹10,000</div>
+                <div class="badge">REGISTRATION FEE: ₹150 PER HEAD (₹200 FOR FF/CRICKET SQUAD | ₹100 FOR EFOOTBALL SOLO)</div>
+            </div>
+
+            <div class="cta-group">
+                <button class="btn-primary" onclick="openModal()">Register Now</button>
+            </div>
+            <!-- Add directly below your Spot Registration button or section -->
+            <div style="color: #d9534f; font-size: 0.875rem; font-weight: 600; margin-top: 6px; display: flex; align-items: center; gap: 4px;">
+              <span>⚠️</span> Note: Lunch will not be provided for spot registrations.
+            </div>
+        </section>
+
+        <!-- Events Section -->
+        <section class="section-container" id="events">
+            <h2 class="section-header">Tactical Directives</h2>
+            <div class="section-sub">// TAP ANY EVENT TO OPEN PROTOCOL SPECS</div>
+
+            <div class="grid">
+                <!-- Cypherix CTF Card -->
+                <div class="card" onclick="openEventModal('cypherix')">
+                    <div>
+                        <div class="card-tag">TECHNICAL • SLOT 1 (11:00 AM - 12:30 PM)</div>
+                        <h3 class="card-title">Cypherix</h3>
+                        <p class="card-desc">The flagship jeopardy-style Capture The Flag challenge. Infiltrate systems, reverse engineer binaries, crack cryptography, and extract high-value flags.</p>
+                        <button class="btn-details">
+                            <span>VIEW PROTOCOL SPECS</span>
+                            <span>&rarr;</span>
+                        </button>
+                    </div>
+                    <div class="card-meta">
+                        <span>COORDINATOR: HASHWATH T</span>
+                        <span>CTF ARENA</span>
+                    </div>
+                </div>
+
+                <!-- Bug & Bet Card -->
+                <div class="card" onclick="openEventModal('bugbet')">
+                    <div>
+                        <div class="card-tag">TECHNICAL • SLOT 2 (01:00 PM - 02:00 PM)</div>
+                        <h3 class="card-title">Bug & Bet</h3>
+                        <p class="card-desc">Analyze. Bet. Debug. Win. Start with 100 virtual coins, choose your bugs wisely, place your bets, fix the code, and maximize your balance before time runs out.</p>
+                        <button class="btn-details">
+                            <span>VIEW PROTOCOL SPECS</span>
+                            <span>&rarr;</span>
+                        </button>
+                    </div>
+                    <div class="card-meta">
+                        <span>COORDINATOR: MERLIN</span>
+                        <span>100 COINS INITIAL</span>
+                    </div>
+                </div>
+
+                <!-- Byte Strike Card -->
+                <div class="card" onclick="openEventModal('bytestrike')">
+                    <div>
+                        <div class="card-tag">TECHNICAL • SLOT 3 (02:00 PM - 03:00 PM)</div>
+                        <h3 class="card-title">Byte Strike</h3>
+                        <p class="card-desc">A competitive programming challenge testing participant logic, algorithm design, writing clean code, and speed under time constraints.</p>
+                        <button class="btn-details">
+                            <span>VIEW PROTOCOL SPECS</span>
+                            <span>&rarr;</span>
+                        </button>
+                    </div>
+                    <div class="card-meta">
+                        <span>COORDINATOR: THOUFIQ</span>
+                        <span>SPEED & ALGO</span>
+                    </div>
+                </div>
+
+                <!-- Zero Clue Card -->
+                <div class="card" onclick="openEventModal('zeroclue')">
+                    <div>
+                        <div class="card-tag">TECHNICAL • SLOT 4 (03:00 PM - 04:00 PM)</div>
+                        <h3 class="card-title">Zero Clue</h3>
+                        <p class="card-desc">Test your muscle memory and pure logical flow. Solve 4 programming challenges with your monitor switched OFF for the first 20 minutes!</p>
+                        <button class="btn-details">
+                            <span>VIEW PROTOCOL SPECS</span>
+                            <span>&rarr;</span>
+                        </button>
+                    </div>
+                    <div class="card-meta">
+                        <span>COORDINATOR: REHAN</span>
+                        <span>BLIND CODING</span>
+                    </div>
+                </div>
+
+                <!-- bidx battle ground Card -->
+                <div class="card" onclick="openEventModal('bidx')">
+                    <div>
+                        <div class="card-tag">NON-TECHNICAL • SLOT 1 (11:00 AM - 12:30 PM)</div>
+                        <h3 class="card-title">Bidding Wars (bidx)</h3>
+                        <p class="card-desc">A fast-paced competitive auction game where teams strategically bid virtual money to outsmart opponents, manage budgets, and build the highest-value collection.</p>
+                        <button class="btn-details">
+                            <span>VIEW PROTOCOL SPECS</span>
+                            <span>&rarr;</span>
+                        </button>
+                    </div>
+                    <div class="card-meta">
+                        <span>COORDINATOR: VALARMATHI</span>
+                        <span>AUCTION WARS</span>
+                    </div>
+                </div>
+
+                <!-- Bid Bang Boom Card -->
+                <div class="card" onclick="openEventModal('bidbang')">
+                    <div>
+                        <div class="card-tag">NON-TECHNICAL • SLOT 2 (01:00 PM - 02:00 PM)</div>
+                        <h3 class="card-title">Bid Bang Boom</h3>
+                        <p class="card-desc">A strategic bidding game where teams compete in challenges using smart bids and teamwork. Special Sabotage Cards – Steal & Freeze add unexpected twists to every bid!</p>
+                        <button class="btn-details">
+                            <span>VIEW PROTOCOL SPECS</span>
+                            <span>&rarr;</span>
+                        </button>
+                    </div>
+                    <div class="card-meta">
+                        <span>COORDINATOR: AYISHA AFRAH</span>
+                        <span>SPECIAL CARDS ACTIVE</span>
+                    </div>
+                </div>
+
+                <!-- Kickoff Free Fire & eFootball Card -->
+                <div class="card" onclick="openEventModal('esports')">
+                    <div>
+                        <div class="card-tag">NON-TECHNICAL • SLOT 3 (02:00 PM - 03:00 PM)</div>
+                        <h3 class="card-title">Esports (Free Fire / eFootball)</h3>
+                        <p class="card-desc">Ultimate gaming showdown featuring Clash Squad Free Fire battles and fast-paced 1v1 eFootball knockout tournaments!</p>
+                        <button class="btn-details">
+                            <span>VIEW PROTOCOL SPECS</span>
+                            <span>&rarr;</span>
+                        </button>
+                    </div>
+                    <div class="card-meta">
+                        <span>COORDINATOR: ABDULLAH</span>
+                        <span>ESPORTS ARENA</span>
+                    </div>
+                </div>
+
+                <!-- Box Cricket Card -->
+                <div class="card" onclick="openEventModal('boxcricket')">
+                    <div>
+                        <div class="card-tag">NON-TECHNICAL • SLOT 4 (03:00 PM - 04:00 PM)</div>
+                        <h3 class="card-title">Boundary Wars (Cricket)</h3>
+                        <p class="card-desc">High-octane knockout box cricket tournament. Fast-paced 3-over matches with underarm bowling and boundary-only action!</p>
+                        <button class="btn-details">
+                            <span>VIEW PROTOCOL SPECS</span>
+                            <span>&rarr;</span>
+                        </button>
+                    </div>
+                    <div class="card-meta">
+                        <span>COORDINATOR: ARSHATH</span>
+                        <span>KNOCKOUTS</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Dynamic Timeline Section with Time Slots -->
+        <section class="section-container" id="timeline">
+            <h2 class="section-header">Incursion Schedule & Time Slots</h2>
+            <div class="section-sub">// 12TH SEPTEMBER 2026 • OFFICIAL EVENT TIMETABLE</div>
+
+            <div class="timeline">
+                <div class="timeline-item left">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-time">08:30 AM - 09:30 AM</div>
+                        <div class="timeline-title">Operative Check-In</div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted);">Badge issuance & credential verification at Main Auditorium.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item right">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-time">09:30 AM - 10:30 AM</div>
+                        <div class="timeline-title">Keynote Protocol</div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted);">Opening ceremony & briefing on Doom's Directives.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item left">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-time">11:00 AM - 12:30 PM (SLOT 1)</div>
+                        <div class="timeline-title">Cypherix (Tech) vs Bidding Wars (Non-Tech)</div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted);">Coordinators: Hashwath T (Cypherix) & Valarmathi (Bidding Wars)</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item right">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-time">12:30 PM - 01:00 PM</div>
+                        <div class="timeline-title">Tactical Lunch Break</div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted);">Networking session & cafeteria recharge.</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item left">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-time">01:00 PM - 02:00 PM (SLOT 2)</div>
+                        <div class="timeline-title">Bug and Bet (Tech) vs Bid Bang Boom (Non-Tech)</div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted);">Coordinators: Merlin (Bug and Bet) & Ayisha afrah (Bid Bang Boom)</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item right">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-time">02:00 PM - 03:00 PM (SLOT 3)</div>
+                        <div class="timeline-title">Byte Strike (Tech) vs Esports Arena / Free Fire Solo (Non-Tech)</div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted);">Coordinators: Thoufiq (Byte Strike) & Abdullah (Esports)</p>
+                    </div>
+                </div>
+
+                <div class="timeline-item left">
+                    <div class="timeline-dot"></div>
+                    <div class="timeline-content">
+                        <div class="timeline-time">03:00 PM - 04:00 PM (SLOT 4)</div>
+                        <div class="timeline-title">Zero Clue (Tech) vs Boundary Wars (Non-Tech)</div>
+                        <p style="font-size: 0.85rem; color: var(--text-muted);">Coordinators: Rehan (Zero Clue) & Arshath (Boundary Wars)</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Countdown Section -->
+        <section class="section-container">
+            <div class="countdown-box">
+                <div class="card-tag">SYSTEM LAUNCH COUNTDOWN</div>
+                <h2 style="font-family: 'Cinzel', serif; font-size: 1.8rem; margin-top: 0.5rem;">SEPTEMBER 12, 2026</h2>
+                <div class="timer">
+                    <div class="time-unit">
+                        <span class="number" id="days">00</span>
+                        <span class="label">Days</span>
+                    </div>
+                    <div class="time-unit">
+                        <span class="number" id="hours">00</span>
+                        <span class="label">Hours</span>
+                    </div>
+                    <div class="time-unit">
+                        <span class="number" id="minutes">00</span>
+                        <span class="label">Minutes</span>
+                    </div>
+                    <div class="time-unit">
+                        <span class="number" id="seconds">00</span>
+                        <span class="label">Seconds</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <!-- Contact Section & Interactive Location Map -->
+        <section class="section-container" id="contact">
+            <h2 class="section-header">Command & Venue</h2>
+            <div class="section-sub">// REACH OUT TO THE TACTICAL LEADERSHIP</div>
+
+            <div class="contact-grid">
+                <div class="contact-card">
+                    <h4>Venue Location</h4>
+                    <p style="font-size: 0.85rem; color: var(--text-muted);">
+                        <strong>Aalim Muhammed Salegh College of Engineering</strong><br>
+                        Nizara Educational Campus, Muthapudupet,<br>
+                        Avadi IAF, Chennai - 600055, Tamil Nadu.<br>
+                        Mechanical Block 3rd floor.
+                    </p>
+                </div>
+
+                <div class="contact-card">
+                    <h4>Faculty Coordinators</h4>
+                    <p style="font-size: 0.85rem; color: var(--text-muted);">
+                        Dr.K.Vanithasri - Head of the Department - Cyber Security<br>
+                        Prof.Jayapraba - Events In-Charge<br>
+                        <strong>Email:</strong> cyvesta26@gmail.com
+                    </p>
+                </div>
+
+                <div class="contact-card">
+                    <h4>Student Coordinators</h4>
+                    <p style="font-size: 0.85rem; color: var(--text-muted);">
+                        Contact: +91 9940391155 , +91 9345772185<br>
+                        Coordinators: IMTHIAZ, NIZAM AND JAMUNA<br>
+                        <strong>Instagram:</strong> AMS_CYBER
+                    </p>
+                </div>
+            </div>
+
+            <!-- LOCATION MAP EMBED -->
+            <div class="map-container">
+                <iframe 
+                   src="https://maps.google.com/maps?q=Aalim%20Muhammed%20Salegh%20College%20of%20Engineering,%20Avadi&t=&z=15&ie=UTF8&iwloc=&output=embed"
+                   width="100%" 
+                   height="300" 
+                   style="border:0;" 
+                   allowfullscreen="" 
+                   loading="lazy" 
+                   referrerpolicy="no-referrer-when-downgrade">
+                </iframe>
+            </div>
+        </section>
+    </main>
+
+    <!-- EVENT DETAILS POPUP MODAL -->
+    <div class="modal-overlay" id="eventModalOverlay" onclick="closeEventModalOnOverlay(event)">
+        <div class="modal">
+            <button class="modal-close" onclick="closeEventModal()">&times;</button>
+            <div id="eventModalBody">
+                <!-- Dynamically populated via JavaScript -->
+            </div>
+            <button class="btn-primary" id="modalApplyBtn" style="width: 100%; margin-top: 1rem;">Register For This Directive</button>
+        </div>
+    </div>
+
+    <!-- Registration Modal -->
+    <div class="modal-overlay" id="modalOverlay">
+        <div class="modal">
+            <button class="modal-close" onclick="closeModal()">&times;</button>
+            <h3 style="font-family: 'Orbitron', sans-serif; color: var(--doom-bright); margin-bottom: 0.3rem;">REGISTRATION PROTOCOL</h3>
+            <p style="color: var(--text-muted); font-size: 0.8rem; margin-bottom: 1rem;">Select your registration category and build your custom schedule.</p>
+
+            <!-- REGISTRATION TYPE TOGGLE (4-BUTTON REGISTRATION SYSTEM) -->
+            <div class="reg-type-selector">
+                <div class="reg-type-btn active" id="btnStandardMode" onclick="setRegMode('standard')">STANDARD (₹150)</div>
+                <div class="reg-type-btn" id="btnFFMode" onclick="setRegMode('freefire')">FREE FIRE SQUAD (₹200)</div>
+                <div class="reg-type-btn" id="btnCricketMode" onclick="setRegMode('cricket')">CRICKET SQUAD (₹200)</div>
+                <div class="reg-type-btn" id="btnEFootballMode" onclick="setRegMode('efootball')">eFOOTBALL SOLO (₹100)</div>
+            </div>
+
+            <form id="registrationForm" onsubmit="handleFormSubmit(event)">
+                <div class="form-group">
+                    <label>APPLICANT / SQUAD LEADER NAME <span>*</span></label>
+                    <input type="text" id="regName" class="form-input" placeholder="Your full name" required>
+                </div>
+
+                <div class="form-group">
+                    <label>EMAIL ADDRESS <span>*</span></label>
+                    <input type="email" id="regEmail" class="form-input" placeholder="name@domain.com" required>
+                </div>
+
+                <div class="form-group">
+                    <label>PHONE NUMBER <span>*</span></label>
+                    <input type="tel" id="regPhone" class="form-input" placeholder="10-digit mobile number" required>
+                </div>
+
+                <div class="form-group">
+                    <label>COLLEGE NAME <span>*</span></label>
+                    <input type="text" id="regCollege" class="form-input" value="Aalim Muhammed Salegh College of Engineering" required>
+                </div>
+
+                <div class="form-group">
+                    <label>DEPARTMENT <span>*</span></label>
+                    <input type="text" id="regDept" class="form-input" placeholder="e.g. Cybersecurity, CSE, ECE" required>
+                </div>
+
+                <div class="form-group">
+                    <label>YEAR OF STUDY <span>*</span></label>
+                    <select id="regYear" class="form-input" required>
+                        <option value="" disabled selected>Select Year</option>
+                        <option value="1ST YEAR">1ST YEAR</option>
+                        <option value="2ND YEAR">2ND YEAR</option>
+                        <option value="3RD YEAR">3RD YEAR</option>
+                        <option value="4TH YEAR">4TH YEAR</option>
+                        <option value="PASSED OUT">PASSED OUT</option>
+                    </select>
+                </div>
+
+                <!-- CRICKET SQUAD INPUTS -->
+                <div id="cricketSquadContainer" class="squad-inputs-box" style="display: none;">
+                    <div class="squad-title">BOUNDARY WARS BOX CRICKET SQUAD ROSTER (₹200 TOTAL ENTRY)</div>
+                    <p style="font-size: 0.72rem; color: var(--text-muted); margin-bottom: 0.8rem;">Captain details are captured above. Enter team name & remaining 3 squad members:</p>
+                    
+                    <div class="squad-grid">
+                        <div class="form-group" style="margin-bottom: 0.5rem;">
+                            <label>TEAM / SQUAD NAME <span>*</span></label>
+                            <input type="text" id="cricSquadName" class="form-input" placeholder="e.g. Avadi Strikers">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0.5rem;">
+                            <label>PLAYER 2 NAME <span>*</span></label>
+                            <input type="text" id="cricP2" class="form-input" placeholder="Player 2 Name">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0.5rem;">
+                            <label>PLAYER 3 NAME <span>*</span></label>
+                            <input type="text" id="cricP3" class="form-input" placeholder="Player 3 Name">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0.5rem;">
+                            <label>PLAYER 4 NAME <span>*</span></label>
+                            <input type="text" id="cricP4" class="form-input" placeholder="Player 4 Name">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- STANDARD & EXTRA EVENT SELECTION GRID -->
+                <div id="standardEventsContainer" class="form-group">
+                    <label id="eventSelectionHeaderLabel">SELECT YOUR EVENTS <span>*</span></label>
+                    <p id="eventSelectionSubText" style="font-size: 0.72rem; color: var(--text-muted); margin-bottom: 0.5rem;">Note: Overlapping events in the exact same time slot will automatically lock out.</p>
+                    
+                    <div class="events-side-by-side">
+                        <!-- Technical Column -->
+                        <div class="event-category-box">
+                            <div class="event-category-title">TECHNICAL EVENTS</div>
+                            
+                            <label class="checkbox-label" id="lbl_cypherix">
+                                <input type="checkbox" name="events" value="Cypherix (CTF)" data-category="tech" data-slot="slot1" onchange="validateEventSelections()">
+                                <div>
+                                    Cypherix (CTF)
+                                    <span class="slot-time-tag">11:00 AM - 12:30 PM</span>
+                                </div>
+                            </label>
+
+                            <label class="checkbox-label" id="lbl_bugbet">
+                                <input type="checkbox" name="events" value="Bug & Bet" data-category="tech" data-slot="slot2" onchange="validateEventSelections()">
+                                <div>
+                                    Bug & Bet
+                                    <span class="slot-time-tag">01:00 PM - 02:00 PM</span>
+                                </div>
+                            </label>
+
+                            <label class="checkbox-label" id="lbl_bytestrike">
+                                <input type="checkbox" name="events" value="Byte Strike" data-category="tech" data-slot="slot3" onchange="validateEventSelections()">
+                                <div>
+                                    Byte Strike
+                                    <span class="slot-time-tag">02:00 PM - 03:00 PM</span>
+                                </div>
+                            </label>
+
+                            <label class="checkbox-label" id="lbl_zeroclue">
+                                <input type="checkbox" name="events" value="Zero Clue" data-category="tech" data-slot="slot4" onchange="validateEventSelections()">
+                                <div>
+                                    Zero Clue
+                                    <span class="slot-time-tag">03:00 PM - 04:00 PM</span>
+                                </div>
+                            </label>
+                        </div>
+
+                        <!-- Non-Technical Column -->
+                        <div class="event-category-box">
+                            <div class="event-category-title">NON-TECHNICAL EVENTS</div>
+                            
+                            <label class="checkbox-label" id="lbl_bidx">
+                                <input type="checkbox" name="events" value="Bidding Wars (bidx)" data-category="nontech" data-slot="slot1" onchange="validateEventSelections()">
+                                <div>
+                                    Bidding Wars (bidx)
+                                    <span class="slot-time-tag">11:00 AM - 12:30 PM</span>
+                                </div>
+                            </label>
+
+                            <label class="checkbox-label" id="lbl_bidbang">
+                                <input type="checkbox" name="events" value="Bid Bang Boom" data-category="nontech" data-slot="slot2" onchange="validateEventSelections()">
+                                <div>
+                                    Bid Bang Boom
+                                    <span class="slot-time-tag">01:00 PM - 02:00 PM</span>
+                                </div>
+                            </label>
+
+                            <label class="checkbox-label" id="lbl_ffsolo">
+                                <input type="checkbox" name="events" value="Free Fire (Solo)" data-category="nontech" data-slot="slot3" onchange="validateEventSelections()">
+                                <div>
+                                    Free Fire (Solo)
+                                    <span class="slot-time-tag">02:00 PM - 03:00 PM</span>
+                                </div>
+                            </label>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FREE FIRE SQUAD INPUTS (HIDDEN BY DEFAULT) -->
+                <div id="ffSquadContainer" class="squad-inputs-box" style="display: none;">
+                    <div class="squad-title">FREE FIRE CLASH SQUAD ROSTER (₹200 TOTAL ENTRY)</div>
+                    <p style="font-size: 0.72rem; color: var(--text-muted); margin-bottom: 0.8rem;">Squad Leader details are captured above. Enter your 3 team members below:</p>
+                    
+                    <div class="squad-grid">
+                        <div class="form-group" style="margin-bottom: 0.5rem;">
+                            <label>SQUAD NAME <span>*</span></label>
+                            <input type="text" id="ffSquadName" class="form-input" placeholder="e.g. Doom Slayers">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0.5rem;">
+                            <label>PLAYER 2 IN-GAME NAME <span>*</span></label>
+                            <input type="text" id="ffP2" class="form-input" placeholder="Player 2 IGN">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0.5rem;">
+                            <label>PLAYER 3 IN-GAME NAME <span>*</span></label>
+                            <input type="text" id="ffP3" class="form-input" placeholder="Player 3 IGN">
+                        </div>
+                        <div class="form-group" style="margin-bottom: 0.5rem;">
+                            <label>PLAYER 4 IN-GAME NAME <span>*</span></label>
+                            <input type="text" id="ffP4" class="form-input" placeholder="Player 4 IGN">
+                        </div>
+                    </div>
+                </div>
+
+                <!-- eFOOTBALL SOLO INPUTS (HIDDEN BY DEFAULT) -->
+                <div id="eFootballContainer" class="squad-inputs-box" style="display: none;">
+                    <div class="squad-title">eFOOTBALL 1v1 SOLO REGISTRATION (₹100 ENTRY)</div>
+                    <p style="font-size: 0.72rem; color: var(--text-muted); margin-bottom: 0.8rem;">Slot 3 (02:00 PM - 03:00 PM). Enter your in-game details for bracket seeding:</p>
+                    
+                    <div class="form-group" style="margin-bottom: 0.5rem;">
+                        <label>IN-GAME USERNAME / TEAM NAME <span>*</span></label>
+                        <input type="text" id="efGamerName" class="form-input" placeholder="e.g. CyberStriker_99">
+                    </div>
+                </div>
+
+                <!-- DYNAMIC PAYMENT SUMMARY BOX -->
+                <div class="fee-summary-card">
+                    <span class="fee-label">TOTAL REGISTRATION FEE:</span>
+                    <span class="fee-amount" id="feeDisplay">₹150</span>
+                </div>
+
+                <div class="payment-qr-card">
+                    <div style="font-family: 'Share Tech Mono', monospace; font-size: 0.75rem; color: var(--gold-accent);">SCAN QR TO PAY REGISTRATION FEE</div>
+                    
+                    <img src="payment-qr.png" alt="PhonePe QR Code - Mr Nabeel Mohamed">
+                    
+                    <div style="font-size: 0.85rem; font-family: 'Orbitron', sans-serif; color: var(--text-main); margin-top: 0.3rem;">Mr Nabeel Mohamed</div>
+                    <div style="font-size: 0.8rem; font-family: 'Share Tech Mono', monospace; color: var(--doom-bright);">ACCEPTED VIA PHONEPE / UPI</div>
+                </div>
+
+                <div class="form-group">
+                    <label>UPLOAD PAYMENT SCREENSHOT <span>*</span></label>
+                    <input type="file" id="regPaymentFile" class="form-input" accept="image/*" required>
+                </div>
+
+                <button type="submit" id="submitBtn" class="btn-primary" style="width: 100%; margin-top: 1rem;">Submit Registration</button>
+            </form>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2026 Cyvesta'26 • Department of Cybersecurity • AMSCE</p>
+    </footer>
+
+    <script>
+        /* 0. DYNAMIC SUPABASE INITIALIZATION */
+        let supabaseClient = null;
+
+        async function initSupabase() {
+            try {
+                const response = await fetch('/api/config');
+                const config = await response.json();
+
+                if (!config.SUPABASE_URL || !config.SUPABASE_ANON_KEY) {
+                    throw new Error('Database credentials missing from configuration endpoint.');
+                }
+
+                supabaseClient = supabase.createClient(config.SUPABASE_URL, config.SUPABASE_ANON_KEY);
+            } catch (err) {
+                console.error('Failed to initialize database client:', err);
+            }
+        }
+
+        initSupabase();
+
+        /* GLOBAL EVENT DATA FOR POPUP SPECS MODAL */
+        const eventData = {
+            cypherix: {
+                tag: "TECHNICAL • SLOT 1 (11:00 AM - 12:30 PM)",
+                title: "Cypherix",
+                desc: "Step into the ultimate multiversal CTF arena. Infiltrate protected server nodes, solve cryptography challenges, analyze web vulnerabilities, and reverse engineer binaries to uncover high-value flags.",
+                rules: [
+                    "Jeopardy-style CTF structure with web, crypto, and forensics categories.",
+                    "Team Size: 1 to 3 operatives per team.",
+                    "Strictly no flag sharing, outside aid, or malicious network denial attacks.",
+                    "Coordinator: Hashwath T"
+                ]
+            },
+            bugbet: {
+                tag: "TECHNICAL • SLOT 2 (01:00 PM - 02:00 PM)",
+                title: "Bug & Bet",
+                desc: "Analyze. Bet. Debug. Win. Start with 100 virtual coins, choose your bugs wisely, place your bets, fix the code, and maximize your balance before time runs out.",
+                rules: [
+                    "Team Size: 1–2 participants.",
+                    "Language Options: Choose C, Java, or Python.",
+                    "Start with 100 virtual coins to place tactical bets on bug difficulties.",
+                    "Coordinator: Merlin"
+                ]
+            },
+            bidbang: {
+                tag: "NON-TECHNICAL • SLOT 2 (01:00 PM - 02:00 PM)",
+                title: "Bid Bang Boom",
+                desc: "A strategic bidding game where teams compete in challenges using smart bids and teamwork. Special Sabotage Cards – Steal & Freeze add unexpected twists and make every bid more exciting!",
+                rules: [
+                    "Team Size: 3–4 members per team.",
+                    "Bid wisely on each challenge using allocated credits.",
+                    "Use Steal or Freeze cards strategically to disrupt opponent teams.",
+                    "Coordinator: Ayisha afrah"
+                ]
+            },
+            bytestrike: {
+                tag: "TECHNICAL • SLOT 3 (02:00 PM - 03:00 PM)",
+                title: "Byte Strike",
+                desc: "A competitive programming challenge designed to test participants' logical thinking, problem-solving ability, coding skills, and speed under time constraints.",
+                rules: [
+                    "Single participant event.",
+                    "Language choice: C, Java, or Python.",
+                    "Analyze algorithms, write code, and execute within allotted time.",
+                    "Coordinator: Thoufiq"
+                ]
+            },
+            zeroclue: {
+                tag: "TECHNICAL • SLOT 4 (03:00 PM - 04:00 PM)",
+                title: "Zero Clue",
+                desc: "A set of 4 questions will be given. For the first 20 minutes, the monitor will be turned off, and participants must type their code without seeing the screen.",
+                rules: [
+                    "Single participant event.",
+                    "First 20 mins: Monitor turned OFF while typing code.",
+                    "Final 10 mins: Monitor turned ON for viewing & bug fixing.",
+                    "Coordinator: Rehan"
+                ]
+            },
+            boxcricket: {
+                tag: "NON-TECHNICAL • SLOT 4 (03:00 PM - 04:00 PM)",
+                title: "Boundary Wars (Cricket)",
+                desc: "High-energy knockouts box cricket tournament! Knockout matches where the winning team advances.",
+                rules: [
+                    "Team Size: 4 members per team (₹200 per squad entry).",
+                    "3 Overs match duration. Underarm bowling only.",
+                    "Only Boundaries — No Singles permitted.",
+                    "Coordinator: Arshath"
+                ]
+            },
+            esports: {
+                tag: "NON-TECHNICAL • SLOT 3 (02:00 PM - 03:00 PM)",
+                title: "Esports Arena (Free Fire & eFootball)",
+                desc: "High-stakes esports action! Compete in Clash Squad 4v4 Free Fire or 1v1 eFootball knockouts.",
+                rules: [
+                    "Free Fire: 4v4 Clash Squad format (₹200 per squad).",
+                    "eFootball: 1v1 solo knockout bracket (₹100 solo entry).",
+                    "Coordinator: Abdullah"
+                ]
+            },
+            bidx: {
+                tag: "NON-TECHNICAL • SLOT 1 (11:00 AM - 12:30 PM)",
+                title: "Bidding Wars (bidx)",
+                desc: "Bidding Wars is a fast-paced competitive auction game where teams compete against each other by strategically bidding their virtual money.",
+                rules: [
+                    "Format: Team-based bidding competition.",
+                    "Manage your virtual budget strategically across multiple auction rounds.",
+                    "Coordinator: Valarmathi"
+                ]
+            }
+        };
+
+        function openEventModal(eventId) {
+            const data = eventData[eventId];
+            if (!data) return;
+
+            const modalBody = document.getElementById('eventModalBody');
+            modalBody.innerHTML = `
+                <div class="event-modal-tag">${data.tag}</div>
+                <h3 class="event-modal-title">${data.title}</h3>
+                <p class="event-modal-desc">${data.desc}</p>
+                <div class="event-modal-section">
+                    <div class="event-modal-section-title">// DIRECTIVE RULES & SPECS</div>
+                    <ul class="event-modal-list">
+                        ${data.rules.map(rule => `<li>${rule}</li>`).join('')}
+                    </ul>
+                </div>
+            `;
+
+            // Setup direct auto-select callback on the Apply button
+            const applyBtn = document.getElementById('modalApplyBtn');
+            applyBtn.onclick = function() {
+                closeEventModal();
+                registerAndAutoSelectEvent(eventId);
+            };
+
+            document.getElementById('eventModalOverlay').classList.add('active');
+        }
+
+        /* AUTO SELECT EVENT IN REGISTRATION FORM */
+        function registerAndAutoSelectEvent(eventId) {
+            openModal();
+
+            if (eventId === 'boxcricket') {
+                setRegMode('cricket');
+            } else if (eventId === 'esports') {
+                setRegMode('freefire'); // Default esports modal to Free Fire Mode
+            } else {
+                setRegMode('standard');
+
+                // Mapping event IDs to checkbox element IDs
+                const idMap = {
+                    'cypherix': 'lbl_cypherix',
+                    'bugbet': 'lbl_bugbet',
+                    'bytestrike': 'lbl_bytestrike',
+                    'zeroclue': 'lbl_zeroclue',
+                    'bidx': 'lbl_bidx',
+                    'bidbang': 'lbl_bidbang'
+                };
+
+                const targetLblId = idMap[eventId];
+                if (targetLblId) {
+                    const labelEl = document.getElementById(targetLblId);
+                    if (labelEl) {
+                        const checkbox = labelEl.querySelector('input[type="checkbox"]');
+                        if (checkbox && !checkbox.disabled) {
+                            checkbox.checked = true;
+                            validateEventSelections();
+
+                            // Scroll to checkbox and apply temporary visual highlight
+                            labelEl.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                            labelEl.classList.add('highlight-select');
+                            setTimeout(() => labelEl.classList.remove('highlight-select'), 2000);
+                        }
+                    }
+                }
+            }
+        }
+
+        function closeEventModal() {
+            document.getElementById('eventModalOverlay').classList.remove('active');
+        }
+
+        function closeEventModalOnOverlay(e) {
+            if (e.target.id === 'eventModalOverlay') closeEventModal();
+        }
+
+        /* REGISTRATION MODE LOGIC (STANDARD vs FREE FIRE vs CRICKET vs eFOOTBALL) */
+        let currentRegMode = 'standard';
+
+        function setRegMode(mode) {
+            currentRegMode = mode;
+            const btnStandard = document.getElementById('btnStandardMode');
+            const btnFF = document.getElementById('btnFFMode');
+            const btnCricket = document.getElementById('btnCricketMode');
+            const btnEF = document.getElementById('btnEFootballMode');
+
+            const standardContainer = document.getElementById('standardEventsContainer');
+            const ffContainer = document.getElementById('ffSquadContainer');
+            const cricketContainer = document.getElementById('cricketSquadContainer');
+            const efContainer = document.getElementById('eFootballContainer');
+            const feeDisplay = document.getElementById('feeDisplay');
+            const headerLabel = document.getElementById('eventSelectionHeaderLabel');
+            const subText = document.getElementById('eventSelectionSubText');
+
+            // Reset mandatory fields
+            document.getElementById('ffSquadName').required = false;
+            document.getElementById('ffP2').required = false;
+            document.getElementById('ffP3').required = false;
+            document.getElementById('ffP4').required = false;
+
+            document.getElementById('cricSquadName').required = false;
+            document.getElementById('cricP2').required = false;
+            document.getElementById('cricP3').required = false;
+            document.getElementById('cricP4').required = false;
+
+            document.getElementById('efGamerName').required = false;
+
+            btnStandard.classList.remove('active');
+            btnFF.classList.remove('active');
+            btnCricket.classList.remove('active');
+            btnEF.classList.remove('active');
+
+            standardContainer.style.display = 'none';
+            ffContainer.style.display = 'none';
+            cricketContainer.style.display = 'none';
+            efContainer.style.display = 'none';
+
+            // Uncheck all standard checkboxes when switching mode
+            document.querySelectorAll('input[name="events"]').forEach(cb => cb.checked = false);
+
+            if (mode === 'standard') {
+                btnStandard.classList.add('active');
+                standardContainer.style.display = 'block';
+                headerLabel.innerHTML = 'SELECT YOUR EVENTS <span>*</span>';
+                subText.textContent = 'Note: Overlapping events in the exact same time slot will automatically lock out.';
+                feeDisplay.textContent = '₹150';
+                validateEventSelections();
+            } else if (mode === 'freefire') {
+                btnFF.classList.add('active');
+                ffContainer.style.display = 'block';
+                feeDisplay.textContent = '₹200';
+
+                document.getElementById('ffSquadName').required = true;
+                document.getElementById('ffP2').required = true;
+                document.getElementById('ffP3').required = true;
+                document.getElementById('ffP4').required = true;
+            } else if (mode === 'cricket') {
+                btnCricket.classList.add('active');
+                cricketContainer.style.display = 'block';
+                standardContainer.style.display = 'block'; // Display standard event options alongside cricket
+                headerLabel.innerHTML = 'ADDITIONAL EVENTS (OPTIONAL)';
+                subText.textContent = 'Cricket is in Slot 4 (03:00 PM - 04:00 PM). Slot 4 events are locked out.';
+                feeDisplay.textContent = '₹200';
+
+                document.getElementById('cricSquadName').required = true;
+                document.getElementById('cricP2').required = true;
+                document.getElementById('cricP3').required = true;
+                document.getElementById('cricP4').required = true;
+
+                validateEventSelections();
+            } else if (mode === 'efootball') {
+                btnEF.classList.add('active');
+                efContainer.style.display = 'block';
+                feeDisplay.textContent = '₹100';
+
+                document.getElementById('efGamerName').required = true;
+            }
+        }
+
+        /* DYNAMIC OVERLAPPING TIME-SLOT LOCKING */
+        function validateEventSelections() {
+            const checkboxes = Array.from(document.querySelectorAll('input[name="events"]'));
+            const checkedBoxes = checkboxes.filter(cb => cb.checked);
+
+            const selectedSlots = new Set();
+            checkedBoxes.forEach(cb => selectedSlots.add(cb.dataset.slot));
+
+            // If in Cricket mode, Cricket automatically occupies Slot 4
+            if (currentRegMode === 'cricket') {
+                selectedSlots.add('slot4');
+            }
+
+            checkboxes.forEach(cb => {
+                const slot = cb.dataset.slot;
+                const label = cb.closest('.checkbox-label');
+
+                if (!cb.checked) {
+                    if (selectedSlots.has(slot)) {
+                        cb.disabled = true;
+                        label.classList.add('disabled');
+                    } else {
+                        cb.disabled = false;
+                        label.classList.remove('disabled');
+                    }
+                } else {
+                    cb.disabled = false;
+                    label.classList.remove('disabled');
+                }
+            });
+        }
+
+        /* MOUSE & PARTICLES */
+        let mouseX = -1000, mouseY = -1000;
+        window.addEventListener('mousemove', (e) => {
+            mouseX = e.clientX;
+            mouseY = e.clientY;
+        });
+
+        const loaderStatus = document.getElementById('loader-status');
+        const entryLoader = document.getElementById('entry-loader');
+        const statusMessages = ['CONNECTING TO LATVERIA NODE...', 'VERIFYING CYBERSECURITY DIRECTIVES...', 'ESTABLISHING ENCRYPTED GRID...', 'SYSTEM READY.'];
+        let msgIdx = 0;
+        const statusInterval = setInterval(() => {
+            msgIdx++;
+            if (msgIdx < statusMessages.length) {
+                loaderStatus.textContent = statusMessages[msgIdx];
+            } else {
+                clearInterval(statusInterval);
+                setTimeout(() => { entryLoader.classList.add('loaded'); }, 400);
+            }
+        }, 500);
+
+        const cursorDot = document.getElementById('cursor-dot');
+        const cursorFollower = document.getElementById('cursor-follower');
+
+        if (cursorDot && cursorFollower) {
+            let followerX = 0, followerY = 0;
+            window.addEventListener('mousemove', (e) => {
+                cursorDot.style.left = `${e.clientX}px`;
+                cursorDot.style.top = `${e.clientY}px`;
+
+                document.querySelectorAll('.card').forEach(card => {
+                    const rect = card.getBoundingClientRect();
+                    card.style.setProperty('--mouse-x', `${e.clientX - rect.left}px`);
+                    card.style.setProperty('--mouse-y', `${e.clientY - rect.top}px`);
+                });
+            });
+
+            function animateCursor() {
+                followerX += (mouseX - followerX) * 0.15;
+                followerY += (mouseY - followerY) * 0.15;
+                cursorFollower.style.left = `${followerX}px`;
+                cursorFollower.style.top = `${followerY}px`;
+                requestAnimationFrame(animateCursor);
+            }
+            animateCursor();
+        }
+
+        const canvas = document.getElementById('particle-canvas');
+        const ctx = canvas.getContext('2d');
+        function resizeCanvas() { canvas.width = window.innerWidth; canvas.height = window.innerHeight; }
+        resizeCanvas();
+        window.addEventListener('resize', resizeCanvas);
+
+        class Particle {
+            constructor() { this.reset(); }
+            reset() {
+                this.x = Math.random() * canvas.width;
+                this.y = Math.random() * canvas.height;
+                this.size = Math.random() * 2 + 0.5;
+                this.speedX = (Math.random() - 0.5) * 0.8;
+                this.speedY = (Math.random() - 0.5) * 0.8;
+                this.opacity = Math.random() * 0.5 + 0.2;
+            }
+            update() {
+                const dx = mouseX - this.x;
+                const dy = mouseY - this.y;
+                const dist = Math.sqrt(dx * dx + dy * dy);
+                if (dist < 150) {
+                    this.x += (dx / dist) * 0.9;
+                    this.y += (dy / dist) * 0.9;
+                } else {
+                    this.x += this.speedX;
+                    this.y += this.speedY;
+                }
+                if (this.x < 0 || this.x > canvas.width || this.y < 0 || this.y > canvas.height) this.reset();
+            }
+            draw() {
+                ctx.fillStyle = `rgba(52, 211, 153, ${this.opacity})`;
+                ctx.beginPath();
+                ctx.arc(this.x, this.y, this.size, 0, Math.PI * 2);
+                ctx.fill();
+            }
+        }
+
+        const particles = Array.from({ length: 70 }, () => new Particle());
+        function animateParticles() {
+            ctx.clearRect(0, 0, canvas.width, canvas.height);
+            for (let i = 0; i < particles.length; i++) {
+                particles[i].update();
+                particles[i].draw();
+                for (let j = i + 1; j < particles.length; j++) {
+                    const dx = particles[i].x - particles[j].x;
+                    const dy = particles[i].y - particles[j].y;
+                    const dist = Math.sqrt(dx * dx + dy * dy);
+                    if (dist < 110) {
+                        ctx.strokeStyle = `rgba(16, 185, 129, ${0.18 - dist / 600})`;
+                        ctx.lineWidth = 0.5;
+                        ctx.beginPath();
+                        ctx.moveTo(particles[i].x, particles[i].y);
+                        ctx.lineTo(particles[j].x, particles[j].y);
+                        ctx.stroke();
+                    }
+                }
+            }
+            requestAnimationFrame(animateParticles);
+        }
+        animateParticles();
+
+        function toggleMobileDrawer() {
+            document.getElementById('mobileDrawer').classList.toggle('open');
+        }
+
+        const logContent = document.getElementById('logContent');
+        const telemetryMsgs = ['Packet decrypted.', 'Firewall rule added.', 'Scanning node 192.168.1.1', 'Subsystem active.', 'Auth key verified.'];
+        setInterval(() => {
+            if (logContent) {
+                const randomMsg = telemetryMsgs[Math.floor(Math.random() * telemetryMsgs.length)];
+                const div = document.createElement('div');
+                div.textContent = `[${new Date().toLocaleTimeString().split(' ')[0]}] ${randomMsg}`;
+                logContent.appendChild(div);
+                if (logContent.children.length > 3) logContent.removeChild(logContent.children[0]);
+            }
+        }, 2200);
+
+        const timelineObserver = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) entry.target.classList.add('reveal');
+                else entry.target.classList.remove('reveal');
+            });
+        }, { threshold: 0.2 });
+
+        document.querySelectorAll('.timeline-item').forEach(item => timelineObserver.observe(item));
+
+        function openModal() { document.getElementById('modalOverlay').classList.add('active'); }
+        function closeModal() { document.getElementById('modalOverlay').classList.remove('active'); }
+
+        /* SUBMISSION HANDLER WITH DYNAMIC REGISTRATION PASS GENERATION */
+        async function handleFormSubmit(e) {
+            e.preventDefault();
+
+            if (!supabaseClient) {
+                alert('Database initialization in progress. Please try again in a moment.');
+                return;
+            }
+
+            const submitBtn = document.getElementById('submitBtn');
+            let selectedEvents = [];
+            let extraDetails = null;
+            let registrationFee = 150;
+            let passId = null;
+
+            if (currentRegMode === 'standard') {
+                selectedEvents = Array.from(document.querySelectorAll('input[name="events"]:checked')).map(cb => cb.value);
+                if (selectedEvents.length === 0) {
+                    alert('Please select at least one event to participate.');
+                    return;
+                }
+            } else if (currentRegMode === 'freefire') {
+                selectedEvents = ['Kickoff Free Fire (Squad)'];
+                registrationFee = 200;
+                passId = 'FF-PASS-' + Math.floor(100000 + Math.random() * 900000);
+                extraDetails = {
+                    squad_name: document.getElementById('ffSquadName').value,
+                    leader: document.getElementById('regName').value,
+                    player_2: document.getElementById('ffP2').value,
+                    player_3: document.getElementById('ffP3').value,
+                    player_4: document.getElementById('ffP4').value,
+                    pass_id: passId
+                };
+            } else if (currentRegMode === 'cricket') {
+                const additionalSelected = Array.from(document.querySelectorAll('input[name="events"]:checked')).map(cb => cb.value);
+                selectedEvents = ['Boundary Wars (Cricket Squad)', ...additionalSelected];
+                registrationFee = 200;
+                passId = 'CRIC-PASS-' + Math.floor(100000 + Math.random() * 900000);
+                extraDetails = {
+                    squad_name: document.getElementById('cricSquadName').value,
+                    captain: document.getElementById('regName').value,
+                    player_2: document.getElementById('cricP2').value,
+                    player_3: document.getElementById('cricP3').value,
+                    player_4: document.getElementById('cricP4').value,
+                    pass_id: passId
+                };
+            } else if (currentRegMode === 'efootball') {
+                selectedEvents = ['Kickoff eFootball (Solo 1v1)'];
+                registrationFee = 100;
+                passId = 'EF-PASS-' + Math.floor(100000 + Math.random() * 900000);
+                extraDetails = {
+                    gamer_tag: document.getElementById('efGamerName').value,
+                    pass_id: passId
+                };
+            }
+
+            const name = document.getElementById('regName').value;
+            const email = document.getElementById('regEmail').value;
+            const phone = document.getElementById('regPhone').value;
+            const college = document.getElementById('regCollege').value;
+            const department = document.getElementById('regDept').value;
+            const year_of_study = document.getElementById('regYear').value;
+            const fileInput = document.getElementById('regPaymentFile');
+
+            if (!fileInput.files || fileInput.files.length === 0) {
+                alert('Please upload your payment screenshot.');
+                return;
+            }
+
+            submitBtn.textContent = 'TRANSMITTING DATA...';
+            submitBtn.disabled = true;
+
+            try {
+                const file = fileInput.files[0];
+                const fileExt = file.name.split('.').pop();
+                const fileName = `${Date.now()}_${Math.random().toString(36).substring(7)}.${fileExt}`;
+
+                const { data: uploadData, error: uploadError } = await supabaseClient.storage
+                    .from('payment-proofs')
+                    .upload(fileName, file);
+
+                if (uploadError) throw uploadError;
+
+                const { data: urlData } = supabaseClient.storage
+                    .from('payment-proofs')
+                    .getPublicUrl(fileName);
+
+                const paymentProofUrl = urlData.publicUrl;
+
+                const { error: insertError } = await supabaseClient
+                    .from('registrations')
+                    .insert([{
+                        name: name,
+                        email: email,
+                        phone: phone,
+                        college: college,
+                        department: department,
+                        year_of_study: year_of_study,
+                        events: selectedEvents,
+                        payment_proof_url: paymentProofUrl,
+                        fee_paid: registrationFee,
+                        squad_pass_id: passId,
+                        squad_details: extraDetails
+                    }]);
+
+                if (insertError) throw insertError;
+
+                if (passId) {
+                    alert(`Registration successful!\n\nYour Gaming/Tournament Pass ID: ${passId}\nKeep this pass ID safe for tournament check-in!`);
+                } else {
+                    alert('Registration submitted successfully to the database!');
+                }
+
+                document.getElementById('registrationForm').reset();
+                setRegMode('standard');
+                closeModal();
+            } catch (err) {
+                console.error(err);
+                alert('Submission failed: ' + (err.message || 'Error communicating with server.'));
+            } finally {
+                submitBtn.textContent = 'Submit Registration';
+                submitBtn.disabled = false;
+            }
+        }
+
+        const targetDate = new Date('2026-09-12T08:30:00').getTime();
+        function updateTimer() {
+            const now = new Date().getTime();
+            const difference = targetDate - now;
+
+            if (difference > 0) {
+                const days = Math.floor(difference / (1000 * 60 * 60 * 24));
+                const hours = Math.floor((difference % (1000 * 60 * 60 * 24)) / (1000 * 60 * 60));
+                const minutes = Math.floor((difference % (1000 * 60 * 60)) / (1000 * 60));
+                const seconds = Math.floor((difference % (1000 * 60)) / 1000);
+
+                document.getElementById('days').textContent = String(days).padStart(2, '0');
+                document.getElementById('hours').textContent = String(hours).padStart(2, '0');
+                document.getElementById('minutes').textContent = String(minutes).padStart(2, '0');
+                document.getElementById('seconds').textContent = String(seconds).padStart(2, '0');
+            }
+        }
+        setInterval(updateTimer, 1000);
+        updateTimer();
+
+        function applyTextScramble(element) {
+            const originalText = element.dataset.original || element.textContent;
+            element.dataset.original = originalText;
+            const chars = 'ABCDEF0123456789!@#$%^&*()_+=~[]{}';
+            let iteration = 0;
+            
+            clearInterval(element.scrambleInterval);
+            element.scrambleInterval = setInterval(() => {
+                element.textContent = originalText
+                    .split('')
+                    .map((char, index) => {
+                        if (index < iteration) return originalText[index];
+                        return chars[Math.floor(Math.random() * chars.length)];
+                    })
+                    .join('');
+
+                if (iteration >= originalText.length) {
+                    clearInterval(element.scrambleInterval);
+                }
+                iteration += 1 / 2;
+            }, 30);
+        }
+
+        document.querySelectorAll('.card-title, .section-header').forEach(el => {
+            el.addEventListener('mouseenter', () => applyTextScramble(el));
+        });
+    </script>
+</body>
+</html>
+
+            animation: spinLoader 1.2s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
+            margin-bottom: 1.5rem;
+            position: relative;
+            box-shadow: 0 0 30px var(--doom-glow);
+        }
+
+        .loader-ring::before {
+            content: '';
+            position: absolute;
+            top: 8px; left: 8px; right: 8px; bottom: 8px;
+            border: 2px dashed var(--doom-green);
+            border-radius: 50%;
+            animation: spinLoaderRev 2s linear infinite;
+        }
+
+        .loader-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 900;
+            letter-spacing: 3px;
+            color: var(--text-main);
+            margin-bottom: 0.5rem;
+        }
+
+        .loader-title span { color: var(--doom-bright); text-shadow: 0 0 15px var(--doom-glow); }
+
+        .loader-text {
+            color: var(--doom-bright);
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            text-align: center;
+            padding: 0 1rem;
+        }
+
+        /* 2. CUSTOM CURSOR SYSTEM (DESKTOP ONLY) */
+        @media (min-width: 1025px) {
+            * { cursor: none !important; }
+            
+            .modal-overlay, 
+            .modal, 
+            .modal *,
+            input, 
+            select, 
+            button, 
+            label {
+                cursor: auto !important;
+            }
+
+            input[type="text"], 
+            input[type="email"], 
+            input[type="tel"], 
+            input[type="file"] {
+                cursor: text !important;
+            }
+
+            button, 
+            select, 
+            input[type="checkbox"], 
+            input[type="radio"],
+            .modal-close,
+            .btn-details {
+                cursor: pointer !important;
+            }
+
+            #cursor-dot {
+                position: fixed;
+                top: 0; left: 0;
+                width: 8px; height: 8px;
+                background: var(--doom-bright);
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 10000;
+                transform: translate(-50%, -50%);
+                box-shadow: 0 0 10px var(--doom-bright);
+            }
+
+            #cursor-follower {
+                position: fixed;
+                top: 0; left: 0;
+                width: 36px; height: 36px;
+                border: 1px solid var(--doom-green);
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 9999;
+                transform: translate(-50%, -50%);
+                transition: transform 0.1s ease-out, border-color 0.2s, background 0.2s;
+                box-shadow: 0 0 15px var(--doom-glow);
+            }
+
+            #cursor-follower::after {
+                content: '';
+                position: absolute;
+                top: 50%; left: 50%;
+                width: 48px; height: 48px;
+                border: 1px dashed var(--gold-accent);
+                border-radius: 50%;
+                transform: translate(-50%, -50%);
+                opacity: 0.4;
+                animation: rotateHUD 8s linear infinite;
+            }
+        }
+
+        /* 3. BACKGROUND & OVERLAYS */
+        #particle-canvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .tech-grid {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background-image: 
+                linear-gradient(rgba(16, 185, 129, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(16, 185, 129, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: -1;
+            animation: gridPulse 6s ease-in-out infinite alternate;
+        }
+
+        .laser-scanline {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--doom-bright), transparent);
+            box-shadow: 0 0 15px var(--doom-bright);
+            pointer-events: none;
+            z-index: 1;
+            animation: scanLine 8s linear infinite;
+        }
+
+        /* LIVE TELEMETRY LOG WIDGET */
+        .live-log-widget {
+            position: fixed;
+            bottom: 20px; right: 20px;
+            width: 280px;
+            background: rgba(3, 8, 5, 0.85);
+            border: 1px solid var(--border-line);
+            border-radius: 6px;
+            padding: 0.8rem;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.75rem;
+            z-index: 100;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 0 20px rgba(0,0,0,0.8);
+        }
+
+        .live-log-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--doom-bright);
+            margin-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-line);
+            padding-bottom: 0.3rem;
+            font-size: 0.7rem;
+        }
+
+        .pulse-dot {
+            width: 8px; height: 8px;
+            background: var(--doom-bright);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--doom-bright);
+            animation: pulseDot 1.5s infinite;
+        }
+
+        .live-log-content {
+            height: 60px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            color: var(--text-muted);
+        }
+
+        /* CLEAN RESPONSIVE NAVIGATION & NAVBAR */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 5%;
+            background: rgba(3, 8, 5, 0.95);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-line);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-logo-container {
+            background: #ffffff;
+            padding: 4px 8px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
+        }
+
+        .nav-logo-img {
+            height: 32px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+            color: var(--text-main);
+        }
+
+        .logo span {
+            color: var(--doom-bright);
+            text-shadow: 0 0 12px var(--doom-glow);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+            transition: 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--doom-bright);
+            text-shadow: 0 0 8px var(--doom-glow);
+        }
+
+        .nav-btn {
+            background: var(--doom-green);
+            color: #000;
+            padding: 0.5rem 1.2rem;
+            border-radius: 4px;
+            font-weight: 800;
+            text-decoration: none !important;
+            box-shadow: 0 0 15px var(--doom-glow);
+        }
+
+        .mobile-toggle {
+            display: none;
+            background: transparent;
+            border: none;
+            color: var(--doom-bright);
+            font-size: 1.5rem;
+            outline: none;
+        }
+
+        .mobile-drawer {
+            position: fixed;
+            top: 0; right: -100%;
+            width: 80%; max-width: 300px;
+            height: 100vh;
+            background: #050d08;
+            border-left: 1px solid var(--border-line);
+            z-index: 9999;
+            padding: 3rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            transition: right 0.4s ease;
+            box-shadow: -10px 0 30px rgba(0,0,0,0.8);
+        }
+
+        .mobile-drawer.open { right: 0; }
+
+        .mobile-drawer-close {
+            align-self: flex-end;
+            background: none; border: none;
+            color: var(--text-muted);
+            font-size: 1.8rem;
+        }
+
+        .mobile-drawer a {
+            color: var(--text-main);
+            text-decoration: none;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(16, 185, 129, 0.1);
+        }
+
+        /* INSTITUTIONAL BANNER */
+        .college-banner {
+            text-align: center;
+            padding: 1.5rem 1rem 0.5rem 1rem;
+            background: radial-gradient(circle at top, rgba(16, 185, 129, 0.08) 0%, transparent 70%);
+            border-bottom: 1px dashed var(--border-line);
+        }
+
+        .college-banner-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin-bottom: 4px;
+        }
+
+        .banner-logo-container {
+            background: #ffffff;
+            padding: 4px 10px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
+        }
+
+        .banner-logo-img {
+            height: 38px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .college-banner-name {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(0.95rem, 3vw, 1.3rem);
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            color: var(--text-main);
+            text-transform: uppercase;
+        }
+
+        .college-banner-sub {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--steel-silver);
+            margin-top: 4px;
+        }
+
+        .college-banner-accreditation {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--gold-accent);
+            margin-top: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .autonomous-tag {
+            background: rgba(217, 119, 6, 0.2);
+            border: 1px solid var(--gold-accent);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        /* HERO SECTION */
+        .hero {
+            min-height: 75vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 3rem 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hud-ring {
+            position: absolute;
+            width: clamp(280px, 60vw, 450px);
+            height: clamp(280px, 60vw, 450px);
+            border: 1px dashed var(--border-line);
+            border-top-color: var(--doom-bright);
+            border-bottom-color: var(--gold-accent);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: rotateHUD 20s linear infinite;
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        .hero-subtitle {
+            font-family: 'Share Tech Mono', monospace;
+            color: var(--gold-accent);
+            letter-spacing: 2px;
+            font-size: 0.8rem;
+            margin-bottom: 1.2rem;
+            border: 1px solid rgba(217, 119, 6, 0.3);
+            padding: 0.4rem 1rem;
+            border-radius: 4px;
+            background: rgba(217, 119, 6, 0.05);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .hero-title {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(2.2rem, 8vw, 5rem);
+            font-weight: 900;
+            line-height: 1.1;
+            background: linear-gradient(180deg, #ffffff 20%, var(--steel-silver) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+            position: relative;
+        }
+
+        .glitch { position: relative; }
+        .glitch::before, .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: var(--bg-deep);
+            clip: rect(0, 0, 0, 0);
+        }
+
+        .glitch::before {
+            left: 2px;
+            text-shadow: -2px 0 var(--doom-green);
+            animation: glitchAnim 3s infinite linear alternate-reverse;
+        }
+
+        .glitch::after {
+            left: -2px;
+            text-shadow: -2px 0 var(--doom-bright);
+            animation: glitchAnim2 2s infinite linear alternate-reverse;
+        }
+
+        .hero-title .doomsday {
+            display: block;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            background: linear-gradient(180deg, #6ee7b7 0%, var(--doom-green) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 35px var(--doom-glow);
+        }
+
+        .hero-description {
+            max-width: 650px;
+            color: var(--text-muted);
+            font-size: clamp(0.9rem, 2.5vw, 1.05rem);
+            margin-bottom: 2rem;
+            padding: 0 0.5rem;
+        }
+
+        .meta-badges {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .badge {
+            background: rgba(16, 185, 129, 0.08);
+            border: 1px solid var(--border-line);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--doom-bright);
+        }
+
+        .badge-gold {
+            background: rgba(217, 119, 6, 0.08);
+            border-color: rgba(217, 119, 6, 0.3);
+            color: var(--gold-accent);
+        }
+
+        .btn-primary {
+            background: var(--doom-green);
+            color: #000;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 800;
+            padding: 0.9rem 2.2rem;
+            border: none;
+            border-radius: 4px;
+            letter-spacing: 2px;
+            box-shadow: 0 0 25px var(--doom-glow);
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary:hover {
+            background: var(--doom-bright);
+            box-shadow: 0 0 40px var(--doom-green);
+            transform: translateY(-2px);
+        }
+
+        .section-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .section-header {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(1.8rem, 5vw, 2.2rem);
+            margin-bottom: 0.5rem;
+            text-align: center;
+            letter-spacing: 2px;
+        }
+
+        .section-sub {
+            text-align: center;
+            color: var(--text-muted);
+            font-family: 'Share Tech Mono', monospace;
+            margin-bottom: 3rem;
+            font-size: 0.85rem;
+        }
+
+        /* EVENT GRID */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: var(--surface-card);
+            border: 1px solid var(--border-line);
+            border-radius: 8px;
+            padding: 1.8rem;
+            backdrop-filter: blur(8px);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .card::before {
+            content: '';
             position: absol            border-top-color: var(--doom-bright);
             border-bottom-color: var(--gold-accent);
             border-radius: 50%;
