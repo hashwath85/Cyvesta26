@@ -1,0 +1,4 @@
+User-agent: *
+Allow: /
+
+Sitemap: https://cyvesta26-mauve.vercel.app/sitemap.xml
