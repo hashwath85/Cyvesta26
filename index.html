@@ -1,4 +1,4 @@
-        <!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
@@ -19,9 +19,6 @@
     <meta property="og:image" content="https://cyvesta26-mauve.vercel.app/logo.png">
 
     <link rel="canonical" href="https://cyvesta26-mauve.vercel.app/">
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Cyvesta'26 | Aalim Muhammed Salegh College of Engineering</title>
     <link href="https://fonts.googleapis.com/css2?family=Cinzel:wght@700;900&family=Orbitron:wght@400;600;800;900&family=Share+Tech+Mono&family=Inter:wght@300;400;600&display=swap" rel="stylesheet">
     <!-- Supabase JS Client via CDN -->
     <script src="https://cdn.jsdelivr.net/npm/@supabase/supabase-js@2"></script>
@@ -79,6 +76,567 @@
             width: 100px; height: 100px;
             border: 2px solid transparent;
             border-top-color: var(--doom-bright);
+            border-bottom-color: var(--gold-accent);
+            border-radius: 50%;
+            animation: spinLoader 1.2s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
+            margin-bottom: 1.5rem;
+            position: relative;
+            box-shadow: 0 0 30px var(--doom-glow);
+        }
+
+        .loader-ring::before {
+            content: '';
+            position: absolute;
+            top: 8px; left: 8px; right: 8px; bottom: 8px;
+            border: 2px dashed var(--doom-green);
+            border-radius: 50%;
+            animation: spinLoaderRev 2s linear infinite;
+        }
+
+        .loader-title {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.5rem;
+            font-weight: 900;
+            letter-spacing: 3px;
+            color: var(--text-main);
+            margin-bottom: 0.5rem;
+        }
+
+        .loader-title span { color: var(--doom-bright); text-shadow: 0 0 15px var(--doom-glow); }
+
+        .loader-text {
+            color: var(--doom-bright);
+            font-size: 0.8rem;
+            letter-spacing: 2px;
+            text-align: center;
+            padding: 0 1rem;
+        }
+
+        /* 2. CUSTOM CURSOR SYSTEM (DESKTOP ONLY) */
+        @media (min-width: 1025px) {
+            * { cursor: none !important; }
+            
+            .modal-overlay, 
+            .modal, 
+            .modal *,
+            input, 
+            select, 
+            button, 
+            label {
+                cursor: auto !important;
+            }
+
+            input[type="text"], 
+            input[type="email"], 
+            input[type="tel"], 
+            input[type="file"] {
+                cursor: text !important;
+            }
+
+            button, 
+            select, 
+            input[type="checkbox"], 
+            input[type="radio"],
+            .modal-close,
+            .btn-details {
+                cursor: pointer !important;
+            }
+
+            #cursor-dot {
+                position: fixed;
+                top: 0; left: 0;
+                width: 8px; height: 8px;
+                background: var(--doom-bright);
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 10000;
+                transform: translate(-50%, -50%);
+                box-shadow: 0 0 10px var(--doom-bright);
+            }
+
+            #cursor-follower {
+                position: fixed;
+                top: 0; left: 0;
+                width: 36px; height: 36px;
+                border: 1px solid var(--doom-green);
+                border-radius: 50%;
+                pointer-events: none;
+                z-index: 9999;
+                transform: translate(-50%, -50%);
+                transition: transform 0.1s ease-out, border-color 0.2s, background 0.2s;
+                box-shadow: 0 0 15px var(--doom-glow);
+            }
+
+            #cursor-follower::after {
+                content: '';
+                position: absolute;
+                top: 50%; left: 50%;
+                width: 48px; height: 48px;
+                border: 1px dashed var(--gold-accent);
+                border-radius: 50%;
+                transform: translate(-50%, -50%);
+                opacity: 0.4;
+                animation: rotateHUD 8s linear infinite;
+            }
+        }
+
+        /* 3. BACKGROUND & OVERLAYS */
+        #particle-canvas {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            pointer-events: none;
+            z-index: 0;
+        }
+
+        .tech-grid {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 100vh;
+            background-image: 
+                linear-gradient(rgba(16, 185, 129, 0.05) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(16, 185, 129, 0.05) 1px, transparent 1px);
+            background-size: 50px 50px;
+            pointer-events: none;
+            z-index: -1;
+            animation: gridPulse 6s ease-in-out infinite alternate;
+        }
+
+        .laser-scanline {
+            position: fixed;
+            top: 0; left: 0;
+            width: 100vw; height: 2px;
+            background: linear-gradient(90deg, transparent, var(--doom-bright), transparent);
+            box-shadow: 0 0 15px var(--doom-bright);
+            pointer-events: none;
+            z-index: 1;
+            animation: scanLine 8s linear infinite;
+        }
+
+        /* LIVE TELEMETRY LOG WIDGET */
+        .live-log-widget {
+            position: fixed;
+            bottom: 20px; right: 20px;
+            width: 280px;
+            background: rgba(3, 8, 5, 0.85);
+            border: 1px solid var(--border-line);
+            border-radius: 6px;
+            padding: 0.8rem;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.75rem;
+            z-index: 100;
+            backdrop-filter: blur(8px);
+            box-shadow: 0 0 20px rgba(0,0,0,0.8);
+        }
+
+        .live-log-header {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            color: var(--doom-bright);
+            margin-bottom: 0.5rem;
+            border-bottom: 1px solid var(--border-line);
+            padding-bottom: 0.3rem;
+            font-size: 0.7rem;
+        }
+
+        .pulse-dot {
+            width: 8px; height: 8px;
+            background: var(--doom-bright);
+            border-radius: 50%;
+            box-shadow: 0 0 10px var(--doom-bright);
+            animation: pulseDot 1.5s infinite;
+        }
+
+        .live-log-content {
+            height: 60px;
+            overflow: hidden;
+            display: flex;
+            flex-direction: column;
+            justify-content: flex-end;
+            color: var(--text-muted);
+        }
+
+        /* CLEAN RESPONSIVE NAVIGATION & NAVBAR */
+        nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0.8rem 5%;
+            background: rgba(3, 8, 5, 0.95);
+            backdrop-filter: blur(16px);
+            border-bottom: 1px solid var(--border-line);
+            position: sticky;
+            top: 0;
+            z-index: 1000;
+        }
+
+        .nav-brand {
+            display: flex;
+            align-items: center;
+            gap: 12px;
+        }
+
+        .nav-logo-container {
+            background: #ffffff;
+            padding: 4px 8px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 12px rgba(255, 255, 255, 0.4);
+        }
+
+        .nav-logo-img {
+            height: 32px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .logo {
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1.3rem;
+            font-weight: 900;
+            letter-spacing: 2px;
+            color: var(--text-main);
+        }
+
+        .logo span {
+            color: var(--doom-bright);
+            text-shadow: 0 0 12px var(--doom-glow);
+        }
+
+        .nav-links {
+            display: flex;
+            gap: 2rem;
+            list-style: none;
+            align-items: center;
+        }
+
+        .nav-links a {
+            color: var(--text-muted);
+            text-decoration: none;
+            font-size: 0.85rem;
+            font-family: 'Orbitron', sans-serif;
+            letter-spacing: 1px;
+            transition: 0.3s ease;
+        }
+
+        .nav-links a:hover {
+            color: var(--doom-bright);
+            text-shadow: 0 0 8px var(--doom-glow);
+        }
+
+        .nav-btn {
+            background: var(--doom-green);
+            color: #000;
+            padding: 0.5rem 1.2rem;
+            border-radius: 4px;
+            font-weight: 800;
+            text-decoration: none !important;
+            box-shadow: 0 0 15px var(--doom-glow);
+        }
+
+        .mobile-toggle {
+            display: none;
+            background: transparent;
+            border: none;
+            color: var(--doom-bright);
+            font-size: 1.5rem;
+            outline: none;
+        }
+
+        .mobile-drawer {
+            position: fixed;
+            top: 0; right: -100%;
+            width: 80%; max-width: 300px;
+            height: 100vh;
+            background: #050d08;
+            border-left: 1px solid var(--border-line);
+            z-index: 9999;
+            padding: 3rem 1.5rem;
+            display: flex;
+            flex-direction: column;
+            gap: 1.5rem;
+            transition: right 0.4s ease;
+            box-shadow: -10px 0 30px rgba(0,0,0,0.8);
+        }
+
+        .mobile-drawer.open { right: 0; }
+
+        .mobile-drawer-close {
+            align-self: flex-end;
+            background: none; border: none;
+            color: var(--text-muted);
+            font-size: 1.8rem;
+        }
+
+        .mobile-drawer a {
+            color: var(--text-main);
+            text-decoration: none;
+            font-family: 'Orbitron', sans-serif;
+            font-size: 1rem;
+            letter-spacing: 1px;
+            padding-bottom: 0.5rem;
+            border-bottom: 1px solid rgba(16, 185, 129, 0.1);
+        }
+
+        /* INSTITUTIONAL BANNER */
+        .college-banner {
+            text-align: center;
+            padding: 1.5rem 1rem 0.5rem 1rem;
+            background: radial-gradient(circle at top, rgba(16, 185, 129, 0.08) 0%, transparent 70%);
+            border-bottom: 1px dashed var(--border-line);
+        }
+
+        .college-banner-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 14px;
+            flex-wrap: wrap;
+            margin-bottom: 4px;
+        }
+
+        .banner-logo-container {
+            background: #ffffff;
+            padding: 4px 10px;
+            border-radius: 6px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 0 12px rgba(255, 255, 255, 0.3);
+        }
+
+        .banner-logo-img {
+            height: 38px;
+            width: auto;
+            object-fit: contain;
+        }
+
+        .college-banner-name {
+            font-family: 'Orbitron', sans-serif;
+            font-size: clamp(0.95rem, 3vw, 1.3rem);
+            font-weight: 800;
+            letter-spacing: 1.5px;
+            color: var(--text-main);
+            text-transform: uppercase;
+        }
+
+        .college-banner-sub {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.75rem;
+            color: var(--steel-silver);
+            margin-top: 4px;
+        }
+
+        .college-banner-accreditation {
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.7rem;
+            color: var(--gold-accent);
+            margin-top: 4px;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        .autonomous-tag {
+            background: rgba(217, 119, 6, 0.2);
+            border: 1px solid var(--gold-accent);
+            padding: 2px 8px;
+            border-radius: 4px;
+            font-weight: bold;
+            letter-spacing: 1px;
+        }
+
+        /* HERO SECTION */
+        .hero {
+            min-height: 75vh;
+            display: flex;
+            flex-direction: column;
+            justify-content: center;
+            align-items: center;
+            text-align: center;
+            padding: 3rem 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .hud-ring {
+            position: absolute;
+            width: clamp(280px, 60vw, 450px);
+            height: clamp(280px, 60vw, 450px);
+            border: 1px dashed var(--border-line);
+            border-top-color: var(--doom-bright);
+            border-bottom-color: var(--gold-accent);
+            border-radius: 50%;
+            pointer-events: none;
+            animation: rotateHUD 20s linear infinite;
+            z-index: -1;
+            opacity: 0.3;
+        }
+
+        .hero-subtitle {
+            font-family: 'Share Tech Mono', monospace;
+            color: var(--gold-accent);
+            letter-spacing: 2px;
+            font-size: 0.8rem;
+            margin-bottom: 1.2rem;
+            border: 1px solid rgba(217, 119, 6, 0.3);
+            padding: 0.4rem 1rem;
+            border-radius: 4px;
+            background: rgba(217, 119, 6, 0.05);
+            display: inline-flex;
+            align-items: center;
+            gap: 8px;
+        }
+
+        .hero-title {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(2.2rem, 8vw, 5rem);
+            font-weight: 900;
+            line-height: 1.1;
+            background: linear-gradient(180deg, #ffffff 20%, var(--steel-silver) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 0.5rem;
+            position: relative;
+        }
+
+        .glitch { position: relative; }
+        .glitch::before, .glitch::after {
+            content: attr(data-text);
+            position: absolute;
+            top: 0; left: 0;
+            width: 100%; height: 100%;
+            background: var(--bg-deep);
+            clip: rect(0, 0, 0, 0);
+        }
+
+        .glitch::before {
+            left: 2px;
+            text-shadow: -2px 0 var(--doom-green);
+            animation: glitchAnim 3s infinite linear alternate-reverse;
+        }
+
+        .glitch::after {
+            left: -2px;
+            text-shadow: -2px 0 var(--doom-bright);
+            animation: glitchAnim2 2s infinite linear alternate-reverse;
+        }
+
+        .hero-title .doomsday {
+            display: block;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 900;
+            background: linear-gradient(180deg, #6ee7b7 0%, var(--doom-green) 100%);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            text-shadow: 0 0 35px var(--doom-glow);
+        }
+
+        .hero-description {
+            max-width: 650px;
+            color: var(--text-muted);
+            font-size: clamp(0.9rem, 2.5vw, 1.05rem);
+            margin-bottom: 2rem;
+            padding: 0 0.5rem;
+        }
+
+        .meta-badges {
+            display: flex;
+            gap: 1rem;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-bottom: 2rem;
+        }
+
+        .badge {
+            background: rgba(16, 185, 129, 0.08);
+            border: 1px solid var(--border-line);
+            padding: 0.5rem 1rem;
+            border-radius: 6px;
+            font-family: 'Share Tech Mono', monospace;
+            font-size: 0.8rem;
+            color: var(--doom-bright);
+        }
+
+        .badge-gold {
+            background: rgba(217, 119, 6, 0.08);
+            border-color: rgba(217, 119, 6, 0.3);
+            color: var(--gold-accent);
+        }
+
+        .btn-primary {
+            background: var(--doom-green);
+            color: #000;
+            font-family: 'Orbitron', sans-serif;
+            font-weight: 800;
+            padding: 0.9rem 2.2rem;
+            border: none;
+            border-radius: 4px;
+            letter-spacing: 2px;
+            box-shadow: 0 0 25px var(--doom-glow);
+            transition: all 0.3s ease;
+            font-size: 0.9rem;
+        }
+
+        .btn-primary:hover {
+            background: var(--doom-bright);
+            box-shadow: 0 0 40px var(--doom-green);
+            transform: translateY(-2px);
+        }
+
+        .section-container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 4rem 1.5rem;
+            position: relative;
+            z-index: 2;
+        }
+
+        .section-header {
+            font-family: 'Cinzel', serif;
+            font-size: clamp(1.8rem, 5vw, 2.2rem);
+            margin-bottom: 0.5rem;
+            text-align: center;
+            letter-spacing: 2px;
+        }
+
+        .section-sub {
+            text-align: center;
+            color: var(--text-muted);
+            font-family: 'Share Tech Mono', monospace;
+            margin-bottom: 3rem;
+            font-size: 0.85rem;
+        }
+
+        /* EVENT GRID */
+        .grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 1.5rem;
+        }
+
+        .card {
+            background: var(--surface-card);
+            border: 1px solid var(--border-line);
+            border-radius: 8px;
+            padding: 1.8rem;
+            backdrop-filter: blur(8px);
+            transition: transform 0.3s ease, border-color 0.3s ease;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between;
+            position: relative;
+            overflow: hidden;
+            cursor: pointer;
+        }
+
+        .card::before {
+            content: '';
+            position: absol            border-top-color: var(--doom-bright);
             border-bottom-color: var(--gold-accent);
             border-radius: 50%;
             animation: spinLoader 1.2s cubic-bezier(0.68, -0.55, 0.27, 1.55) infinite;
